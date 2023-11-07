@@ -1,0 +1,10 @@
+../Core/Src/lcd.c:3:6:I2C_Scan	3
+../Core/Src/lcd.c:22:19:LCD_SendInternal	2
+../Core/Src/lcd.c:44:6:LCD_SendCommand	1
+../Core/Src/lcd.c:48:6:LCD_SendData	1
+../Core/Src/lcd.c:52:6:LCD_Init	1
+../Core/Src/lcd.c:63:6:LCD_SendString	2
+../Core/Src/lcd.c:70:6:init	1
+../Core/Src/lcd.c:83:6:LCD_PrintAll	1
+../Core/Src/lcd.c:93:6:LCD_Print	3
+../Core/Src/lcd.c:106:6:LCD_Clear	1
