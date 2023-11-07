@@ -1,40 +1,10 @@
-10:40:15 **** Incremental Build of configuration Debug for project STM_CLK ****
+17:05:17 **** Incremental Build of configuration Debug for project STM_CLK ****
 make -j8 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'get_time':
-../Core/Src/main.c:139:9: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
-  139 |         sprintf((char*)showTime, "%s %02d:%02d:%02d",ampm[sTime.TimeFormat], sTime.Hours, sTime.Minutes, sTime.Seconds);
-      |         ^~~~~~~
-../Core/Src/main.c:26:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-   25 | #include "lcd.h"
-  +++ |+#include <stdio.h>
-   26 | 
-../Core/Src/main.c:139:9: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
-  139 |         sprintf((char*)showTime, "%s %02d:%02d:%02d",ampm[sTime.TimeFormat], sTime.Hours, sTime.Minutes, sTime.Seconds);
-      |         ^~~~~~~
-../Core/Src/main.c:139:9: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-../Core/Src/main.c:142:9: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
-  142 |         printf("%s %s\r\n", showTime, showDate);
-      |         ^~~~~~
-../Core/Src/main.c:142:9: note: include '<stdio.h>' or provide a declaration of 'printf'
-../Core/Src/main.c:142:9: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
-../Core/Src/main.c:142:9: note: include '<stdio.h>' or provide a declaration of 'printf'
-../Core/Src/main.c: In function 'HAL_RTC_AlarmAEventCallback':
-../Core/Src/main.c:624:9: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
-  624 |         printf("RINGRINGRINGRING!!!!!!!!!!!!!!!!!!!!\r\n");
-      |         ^~~~~~
-../Core/Src/main.c:624:9: note: include '<stdio.h>' or provide a declaration of 'printf'
-arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: STM_CLK.elf
- 
 arm-none-eabi-size   STM_CLK.elf 
-arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
    text	   data	    bss	    dec	    hex	filename
-  31868	    120	   4088	  36076	   8cec	STM_CLK.elf
+  34036	    120	   4216	  38372	   95e4	STM_CLK.elf
 Finished building: default.size.stdout
  
-Finished building: STM_CLK.list
- 
 
-10:40:16 Build Finished. 0 errors, 5 warnings. (took 1s.178ms)
+17:05:17 Build Finished. 0 errors, 0 warnings. (took 307ms)
 

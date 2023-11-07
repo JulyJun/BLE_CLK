@@ -1,0 +1,2 @@
+../Core/Src/flash.c:16:17:GetSector	47
+../Core/Src/flash.c:124:17:GetSectorSize	11
