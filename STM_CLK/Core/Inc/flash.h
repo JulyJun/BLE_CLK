@@ -62,8 +62,8 @@
 #define FLASH_SECTOR_22    22U /*!< Sector Number 22  */
 #define FLASH_SECTOR_23    23U /*!< Sector Number 23  */
 
-static uint32_t GetSector(uint32_t Address);
+uint32_t GetSector(uint32_t Address);
 
-static uint32_t GetSectorSize(uint32_t Sector);
+uint32_t GetSectorSize(uint32_t Sector);
 
 #endif /* INC_FLASH_H_ */

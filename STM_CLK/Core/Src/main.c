@@ -30,6 +30,7 @@ int _write(int file, char *ptr, int len)
 	HAL_UART_Transmit(&huart3, (uint8_t*)ptr, len, 500);
 	return len;
 }
+uint8_t rx3Data, rx4Data;
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,8 +41,8 @@ int _write(int file, char *ptr, int len)
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define FLASH_USER_START_ADDR   ADDR_FLASH_SECTOR_10
-#define FLASH_USER_END_ADDR     ADDR_FLASH_SECTOR_11  \
-															+  GetSectorSize(ADDR_FLASH_SECTOR_11) -1 /* End @ of user Flash area : sector start address + sector size -1 */
+#define FLASH_USER_END_ADDR     ADDR_FLASH_SECTOR_10  \
+															+  GetSectorSize(ADDR_FLASH_SECTOR_10) -1 /* End @ of user Flash area : sector start address + sector size -1 */
 
 /* USER CODE END PD */
 
@@ -75,6 +76,25 @@ char showTime[16] = {0};
 char showDate[16] = {0};
 char ampm[2][3] = {"AM", "PM"};
 
+
+
+typedef struct
+{
+	char bleBuffer[64];							// Send to BLE
+	char comBuffer[64];							// Send to COM
+	uint8_t cur_BLE_Index;						// current ble buffer index
+	uint8_t cur_COM_Index;					// current com buffer index
+}bleBuffer_t;
+
+typedef enum
+{
+	NORMAL_STATE,
+	TIME_SETTING,
+	ALARM_TIME_SETTING,
+	MUSIC_SELECT
+}CLK_State_t;
+
+bleBuffer_t ble = {0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -210,8 +230,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-
-	HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -238,24 +257,27 @@ int main(void)
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
 
+  HAL_UART_Receive_IT(&huart3, (uint8_t*)&rx3Data, sizeof(rx3Data));
+  HAL_UART_Receive_IT(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data));
 
   unsigned int value, addr = FLASH_USER_START_ADDR, cnt = 0;
   unsigned char buf[30];
 	HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BIN);
 	init();
 	LCD_Clear();
-	set_date(RTC_WEEKDAY_MONDAY, 11, 7, 23);
-	set_time(12,52,0);
+	set_date(RTC_WEEKDAY_MONDAY, 11, 8, 23);
+	set_time(14,10,0);
 	set_alarm(0, 0, 5);
-	eraseFlash(FLASH_USER_START_ADDR);
+	//eraseFlash(FLASH_USER_START_ADDR);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		get_time();
-		HAL_Delay(300);
+		//get_time();
+		//HAL_Delay(300);
 
     /* USER CODE END WHILE */
 
@@ -319,12 +341,15 @@ static void MX_NVIC_Init(void)
   /* TIM2_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(TIM2_IRQn);
-  /* USART3_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(USART3_IRQn);
   /* RTC_Alarm_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
+  /* USART3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(USART3_IRQn);
+  /* UART4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(UART4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(UART4_IRQn);
 }
 
 /**
@@ -717,7 +742,57 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
 	printf("RINGRINGRINGRING!!!!!!!!!!!!!!!!!!!!\r\n");
 }
 
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	// From COM3 ->(UART3)ST(UART4) ->BLE
+	if(huart->Instance == USART3)
+	{
+		// received enter key
+		if(rx3Data == '\r' || ble.cur_BLE_Index > 64)
+		{
+			printf("\r\n send following data to BLE \r\n");
+			printf(ble.bleBuffer);
+			printf("\r\n");
+			HAL_UART_Transmit(&huart4, (uint8_t*)&ble.bleBuffer, ble.cur_BLE_Index, 500);
+			memset(ble.bleBuffer, 0, sizeof(ble.bleBuffer)/sizeof(ble.bleBuffer[0]));
+			ble.cur_BLE_Index = 0;
+		}
+		else
+		{
+			ble.bleBuffer[ble.cur_BLE_Index] = rx3Data;
+			printf("collecting: %c\r\n", (char)rx3Data);
+			ble.cur_BLE_Index++;
+		}
 
+		HAL_UART_Receive_IT(&huart3, (uint8_t*)&rx3Data, sizeof(rx3Data));
+	}
+	// From BLE ->(UART4)ST(UART3)->COM3
+	else if(huart->Instance == UART4)
+	{
+		HAL_UART_Transmit(&huart3, (uint8_t*)&rx4Data, sizeof(rx4Data), 100);
+		HAL_UART_Receive_IT(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data));
+#if 0
+		if(ble.comBuffer[ble.cur_COM_Index] == '\0' | ble.cur_COM_Index > 64)
+		{
+			HAL_UART_Transmit(&huart3, (uint8_t*)&rx3Data, sizeof(rx3Data), 100);
+					printf("data received from BLE\r\n");
+					HAL_UART_Transmit(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data), 100);
+					ble.cur_COM_Index = 0;
+		}
+		else
+		{
+			ble.comBuffer[ble.cur_COM_Index] = rx4Data;
+
+			printf("something wrong here..%c\r\n", ble.comBuffer[ble.cur_COM_Index]);
+			ble.cur_COM_Index++;
+		}
+		HAL_UART_Receive_IT(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data));
+#endif
+	}
+
+}
+
+#if 0
 static uint32_t GetSector(uint32_t Address)
 {
 	uint32_t sector = 0;
@@ -845,7 +920,7 @@ static uint32_t GetSectorSize(uint32_t Sector)
 	}
 	return sectorsize;
 }
-
+#endif
 /* USER CODE END 4 */
 
 /**

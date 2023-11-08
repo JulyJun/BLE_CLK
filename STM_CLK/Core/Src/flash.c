@@ -13,7 +13,7 @@
   * @param  None
   * @retval The sector of a given address
   */
-static uint32_t GetSector(uint32_t Address)
+uint32_t GetSector(uint32_t Address)
 {
 	uint32_t sector = 0;
 
@@ -121,7 +121,7 @@ static uint32_t GetSector(uint32_t Address)
  * @param  None
  * @retval The size of a given sector
  */
-static uint32_t GetSectorSize(uint32_t Sector)
+uint32_t GetSectorSize(uint32_t Sector)
 {
 	uint32_t sectorsize = 0x00;
 	if((Sector == FLASH_SECTOR_0) || (Sector == FLASH_SECTOR_1) || (Sector == FLASH_SECTOR_2) ||\

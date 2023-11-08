@@ -52,6 +52,12 @@ default.size.stdout \
 OBJDUMP_LIST += \
 STM_CLK.list \
 
+OBJCOPY_HEX += \
+STM_CLK.hex \
+
+OBJCOPY_BIN += \
+STM_CLK.bin \
+
 
 # All Target
 all: main-build
@@ -75,12 +81,22 @@ STM_CLK.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+STM_CLK.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "STM_CLK.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
+STM_CLK.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "STM_CLK.bin"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) STM_CLK.elf STM_CLK.list STM_CLK.map default.size.stdout
+	-$(RM) STM_CLK.bin STM_CLK.elf STM_CLK.hex STM_CLK.list STM_CLK.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'
