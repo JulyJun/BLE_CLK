@@ -42,7 +42,7 @@ uint8_t rx3Data, rx4Data;
 /* USER CODE BEGIN PD */
 #define FLASH_USER_START_ADDR   ADDR_FLASH_SECTOR_10
 #define FLASH_USER_END_ADDR     ADDR_FLASH_SECTOR_10  \
-															+  GetSectorSize(ADDR_FLASH_SECTOR_10) -1 /* End @ of user Flash area : sector start address + sector size -1 */
+		+  GetSectorSize(ADDR_FLASH_SECTOR_10) -1 /* End @ of user Flash area : sector start address + sector size -1 */
 
 /* USER CODE END PD */
 
@@ -56,6 +56,8 @@ uint8_t rx3Data, rx4Data;
 ETH_TxPacketConfig TxConfig;
 ETH_DMADescTypeDef  DMARxDscrTab[ETH_RX_DESC_CNT]; /* Ethernet Rx DMA Descriptors */
 ETH_DMADescTypeDef  DMATxDscrTab[ETH_TX_DESC_CNT]; /* Ethernet Tx DMA Descriptors */
+
+ADC_HandleTypeDef hadc1;
 
 ETH_HandleTypeDef heth;
 
@@ -95,6 +97,7 @@ typedef enum
 }CLK_State_t;
 
 bleBuffer_t ble = {0};
+int adc1_val, adc2_val;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -107,6 +110,7 @@ static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_UART4_Init(void);
+static void MX_ADC1_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
@@ -252,16 +256,17 @@ int main(void)
   MX_RTC_Init();
   MX_TIM2_Init();
   MX_UART4_Init();
+  MX_ADC1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+	HAL_ADC_Start_IT(&hadc1);
+	HAL_UART_Receive_IT(&huart3, (uint8_t*)&rx3Data, sizeof(rx3Data));
+	HAL_UART_Receive_IT(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data));
 
-  HAL_UART_Receive_IT(&huart3, (uint8_t*)&rx3Data, sizeof(rx3Data));
-  HAL_UART_Receive_IT(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data));
-
-  unsigned int value, addr = FLASH_USER_START_ADDR, cnt = 0;
-  unsigned char buf[30];
+	unsigned int value, addr = FLASH_USER_START_ADDR, cnt = 0;
+	unsigned char buf[30];
 	HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BIN);
 	init();
 	LCD_Clear();
@@ -344,12 +349,73 @@ static void MX_NVIC_Init(void)
   /* RTC_Alarm_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
+  /* EXTI9_5_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+  /* ADC_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(ADC_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(ADC_IRQn);
   /* USART3_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(USART3_IRQn);
   /* UART4_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(UART4_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(UART4_IRQn);
+  /* EXTI15_10_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+}
+
+/**
+  * @brief ADC1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_ADC1_Init(void)
+{
+
+  /* USER CODE BEGIN ADC1_Init 0 */
+
+  /* USER CODE END ADC1_Init 0 */
+
+  ADC_ChannelConfTypeDef sConfig = {0};
+
+  /* USER CODE BEGIN ADC1_Init 1 */
+
+  /* USER CODE END ADC1_Init 1 */
+
+  /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
+  */
+  hadc1.Instance = ADC1;
+  hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
+  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
+  hadc1.Init.ScanConvMode = ENABLE;
+  hadc1.Init.ContinuousConvMode = ENABLE;
+  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
+  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc1.Init.NbrOfConversion = 1;
+  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+  if (HAL_ADC_Init(&hadc1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  */
+  sConfig.Channel = ADC_CHANNEL_3;
+  sConfig.Rank = 1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN ADC1_Init 2 */
+
+  /* USER CODE END ADC1_Init 2 */
+
 }
 
 /**
@@ -707,7 +773,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : USER_Btn_Pin */
   GPIO_InitStruct.Pin = USER_Btn_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(USER_Btn_GPIO_Port, &GPIO_InitStruct);
 
@@ -731,6 +797,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(USB_OverCurrent_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : PD7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 /* USER CODE END MX_GPIO_Init_2 */
 }
@@ -740,6 +812,43 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
 {
 	HAL_GPIO_TogglePin(GPIOB, LD1_Pin|LD2_Pin|LD3_Pin);
 	printf("RINGRINGRINGRING!!!!!!!!!!!!!!!!!!!!\r\n");
+}
+unsigned int stime, etime = 0, interval, ctime;
+unsigned char buf[120];
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	//stime = HAL_GetTick();
+	// joystick switch
+	GPIO_PinState pinstate;
+
+	if(GPIO_Pin == USER_Btn_Pin)
+	{
+		stime = HAL_GetTick();
+		interval = stime - etime;
+		etime = stime;
+		memset(buf,0, sizeof(buf));
+		pinstate = HAL_GPIO_ReadPin(GPIOC, GPIO_PIN_13);
+		if(pinstate == GPIO_PIN_SET)
+		{
+			sprintf(buf, "rising\r\n");
+		}
+		else
+		{
+			sprintf(buf, "fallin\r\nstime = %d\r\ninterval = %d\r\netime = %d\r\n---------\r\n", stime, interval, etime);
+			HAL_UART_Transmit_IT(&huart3, buf, sizeof(buf));
+		}
+
+	}
+}
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc)
+{
+	if(hadc->Instance == ADC1)
+	{
+		adc1_val = HAL_ADC_GetValue(&hadc1);
+		printf("ADC1: %d", adc1_val);
+	}
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
@@ -759,6 +868,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		}
 		else
 		{
+
 			ble.bleBuffer[ble.cur_BLE_Index] = rx3Data;
 			printf("collecting: %c\r\n", (char)rx3Data);
 			ble.cur_BLE_Index++;
@@ -775,9 +885,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if(ble.comBuffer[ble.cur_COM_Index] == '\0' | ble.cur_COM_Index > 64)
 		{
 			HAL_UART_Transmit(&huart3, (uint8_t*)&rx3Data, sizeof(rx3Data), 100);
-					printf("data received from BLE\r\n");
-					HAL_UART_Transmit(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data), 100);
-					ble.cur_COM_Index = 0;
+			printf("data received from BLE\r\n");
+			HAL_UART_Transmit(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data), 100);
+			ble.cur_COM_Index = 0;
 		}
 		else
 		{
