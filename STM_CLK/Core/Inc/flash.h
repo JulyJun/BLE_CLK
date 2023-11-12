@@ -62,8 +62,24 @@
 #define FLASH_SECTOR_22    22U /*!< Sector Number 22  */
 #define FLASH_SECTOR_23    23U /*!< Sector Number 23  */
 
+typedef enum
+{
+	RW_OK = 0x0,
+	RW_ERROR = 0x1
+} Status_flashRW;
+
+typedef struct
+{
+  uint32_t FLASH_USER_START_ADDR;
+  uint32_t FLASH_USER_END_ADDR;
+} target_flashRange_t;
+
+
 uint32_t GetSector(uint32_t Address);
 
 uint32_t GetSectorSize(uint32_t Sector);
 
+Status_flashRW readFlash(uint32_t StartADDR);
+
+Status_flashRW eraseFlash(target_flashRange_t* target, uint32_t ADDR_FLASH_SECTOR_x, uint32_t DATA_32);
 #endif /* INC_FLASH_H_ */
