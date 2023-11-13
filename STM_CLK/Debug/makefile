@@ -66,8 +66,8 @@ all: main-build
 main-build: STM_CLK.elf secondary-outputs
 
 # Tool invocations
-STM_CLK.elf STM_CLK.map: $(OBJS) $(USER_OBJS) C:\BLE_CLK\STM_CLK\STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\BLE_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+STM_CLK.elf STM_CLK.map: $(OBJS) $(USER_OBJS) C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

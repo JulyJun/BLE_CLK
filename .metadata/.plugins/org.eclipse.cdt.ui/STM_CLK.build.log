@@ -1,106 +1,39 @@
-15:20:50 **** Incremental Build of configuration Debug for project STM_CLK ****
+18:17:38 **** Incremental Build of configuration Debug for project STM_CLK ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'get_time':
-../Core/Src/main.c:168:9: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
-  168 |         sprintf((char*)showTime, "%s %02d:%02d:%02d",ampm[sTime.TimeFormat], sTime.Hours, sTime.Minutes, sTime.Seconds);
-      |         ^~~~~~~
-../Core/Src/main.c:27:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-   26 | #include "flash.h"
-  +++ |+#include <stdio.h>
-   27 | 
-../Core/Src/main.c:168:9: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
-  168 |         sprintf((char*)showTime, "%s %02d:%02d:%02d",ampm[sTime.TimeFormat], sTime.Hours, sTime.Minutes, sTime.Seconds);
-      |         ^~~~~~~
-../Core/Src/main.c:168:9: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-../Core/Src/main.c:171:9: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
-  171 |         printf("%s %s\r\n", showTime, showDate);
-      |         ^~~~~~
-../Core/Src/main.c:171:9: note: include '<stdio.h>' or provide a declaration of 'printf'
-../Core/Src/main.c:171:9: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
-../Core/Src/main.c:171:9: note: include '<stdio.h>' or provide a declaration of 'printf'
-../Core/Src/main.c: In function 'readFlash':
-../Core/Src/main.c:188:9: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
-  188 |         printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
-      |         ^~~~~~
-../Core/Src/main.c:188:9: note: include '<stdio.h>' or provide a declaration of 'printf'
-../Core/Src/main.c:188:27: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
-  188 |         printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
-      |                        ~~~^               ~~~~~~~~~
-      |                           |               |
-      |                           unsigned int    uint32_t {aka long unsigned int}
-      |                        %08lx
-../Core/Src/main.c: In function 'eraseFlash':
-../Core/Src/main.c:207:25: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
-  207 |                         printf("Changed: ");
-      |                         ^~~~~~
-../Core/Src/main.c:207:25: note: include '<stdio.h>' or provide a declaration of 'printf'
-../Core/Src/main.c:213:25: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
-  213 |                         printf("error occurred");
-      |                         ^~~~~~
-../Core/Src/main.c:213:25: note: include '<stdio.h>' or provide a declaration of 'printf'
 ../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:269:17: warning: unused variable 'buf' [-Wunused-variable]
-  269 |   unsigned char buf[30];
-      |                 ^~~
-../Core/Src/main.c:268:53: warning: unused variable 'cnt' [-Wunused-variable]
-  268 |   unsigned int value, addr = FLASH_USER_START_ADDR, cnt = 0;
-      |                                                     ^~~
-../Core/Src/main.c:268:23: warning: unused variable 'addr' [-Wunused-variable]
-  268 |   unsigned int value, addr = FLASH_USER_START_ADDR, cnt = 0;
-      |                       ^~~~
-../Core/Src/main.c:268:16: warning: unused variable 'value' [-Wunused-variable]
-  268 |   unsigned int value, addr = FLASH_USER_START_ADDR, cnt = 0;
-      |                ^~~~~
-../Core/Src/main.c: In function 'HAL_RTC_AlarmAEventCallback':
-../Core/Src/main.c:814:9: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
-  814 |         printf("RINGRINGRINGRING!!!!!!!!!!!!!!!!!!!!\r\n");
-      |         ^~~~~~
-../Core/Src/main.c:814:9: note: include '<stdio.h>' or provide a declaration of 'printf'
-../Core/Src/main.c: In function 'HAL_GPIO_EXTI_Callback':
-../Core/Src/main.c:835:25: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
-  835 |                         sprintf(buf, "rising\r\n");
-      |                         ^~~~~~~
-../Core/Src/main.c:835:25: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-../Core/Src/main.c:835:33: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
-  835 |                         sprintf(buf, "rising\r\n");
-      |                                 ^~~
-      |                                 |
-      |                                 unsigned char *
-../Core/Src/main.c:835:33: note: expected 'char *' but argument is of type 'unsigned char *'
-../Core/Src/main.c:839:25: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
-  839 |                         sprintf(buf, "fallin\r\nstime = %d\r\ninterval = %d\r\netime = %d\r\n---------\r\n", stime, interval, etime);
-      |                         ^~~~~~~
-../Core/Src/main.c:839:25: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-../Core/Src/main.c:839:33: warning: pointer targets in passing argument 1 of 'sprintf' differ in signedness [-Wpointer-sign]
-  839 |                         sprintf(buf, "fallin\r\nstime = %d\r\ninterval = %d\r\netime = %d\r\n---------\r\n", stime, interval, etime);
-      |                                 ^~~
-      |                                 |
-      |                                 unsigned char *
-../Core/Src/main.c:839:33: note: expected 'char *' but argument is of type 'unsigned char *'
-../Core/Src/main.c: In function 'HAL_ADC_ConvCpltCallback':
-../Core/Src/main.c:851:17: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
-  851 |                 printf("ADC1: %d", adc1_val);
-      |                 ^~~~~~
-../Core/Src/main.c:851:17: note: include '<stdio.h>' or provide a declaration of 'printf'
-../Core/Src/main.c: In function 'HAL_UART_RxCpltCallback':
-../Core/Src/main.c:863:25: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
-  863 |                         printf("\r\n send following data to BLE \r\n");
-      |                         ^~~~~~
-../Core/Src/main.c:863:25: note: include '<stdio.h>' or provide a declaration of 'printf'
-../Core/Src/main.c:874:25: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
-  874 |                         printf("collecting: %c\r\n", (char)rx3Data);
-      |                         ^~~~~~
-../Core/Src/main.c:874:25: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Core/Src/main.c:223:25: warning: implicit declaration of function 'timeSetter' [-Wimplicit-function-declaration]
+  223 |                         timeSetter();
+      |                         ^~~~~~~~~~
+../Core/Src/main.c:226:33: warning: implicit declaration of function 'saveCurrentTime' [-Wimplicit-function-declaration]
+  226 |                                 saveCurrentTime();
+      |                                 ^~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'get_time':
+../Core/Src/main.c:372:13: warning: unused variable 'longer' [-Wunused-variable]
+  372 |         int longer;
+      |             ^~~~~~
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:388:6: warning: conflicting types for 'timeSetter'; have 'void(void)'
+  388 | void timeSetter(void)
+      |      ^~~~~~~~~~
+../Core/Src/main.c:223:25: note: previous implicit declaration of 'timeSetter' with type 'void(void)'
+  223 |                         timeSetter();
+      |                         ^~~~~~~~~~
+../Core/Src/main.c:494:6: warning: conflicting types for 'saveCurrentTime'; have 'void(void)'
+  494 | void saveCurrentTime(void)
+      |      ^~~~~~~~~~~~~~~
+../Core/Src/main.c:226:33: note: previous implicit declaration of 'saveCurrentTime' with type 'void(void)'
+  226 |                                 saveCurrentTime();
+      |                                 ^~~~~~~~~~~~~~~
 arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: STM_CLK.elf
  
 arm-none-eabi-size   STM_CLK.elf 
 arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
 arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
-arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
    text	   data	    bss	    dec	    hex	filename
-  35448	    112	   4464	  40024	   9c58	STM_CLK.elf
+  41616	    120	   4720	  46456	   b578	STM_CLK.elf
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
 Finished building: default.size.stdout
  
 Finished building: STM_CLK.hex
@@ -110,5 +43,5 @@ Finished building: STM_CLK.bin
 Finished building: STM_CLK.list
  
 
-15:20:51 Build Finished. 0 errors, 20 warnings. (took 1s.223ms)
+18:17:39 Build Finished. 0 errors, 5 warnings. (took 1s.380ms)
 
