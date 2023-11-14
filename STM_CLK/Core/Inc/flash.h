@@ -84,6 +84,6 @@ uint32_t GetSectorSize(uint32_t Sector);
 void initFlash(target_flashRange_t* target, uint32_t startAddr, uint32_t endAddr);
 // Read 4 byte.
 Status_flashRW readFlash(uint32_t StartADDR);
-Status_flashRW overWriteFlash(target_flashRange_t* target, uint32_t DATA);
-Status_flashRW eraseFlash(target_flashRange_t* target, uint32_t DATA_32);
+Status_flashRW overwriteFlash(target_flashRange_t* target, uint32_t DATA);
+Status_flashRW eraseFlash(target_flashRange_t* target);
 #endif /* INC_FLASH_H_ */

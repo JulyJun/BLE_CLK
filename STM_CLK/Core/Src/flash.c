@@ -157,7 +157,7 @@ Status_flashRW readFlash(uint32_t StartADDR)
   return RW_OK;
 }
 
-Status_flashRW overWriteFlash(target_flashRange_t* target, uint32_t DATA)
+Status_flashRW overwriteFlash(target_flashRange_t* target, uint32_t DATA)
 {
 	HAL_FLASH_Unlock();
 	uint32_t Address = target->USER_TARGET_ADDR;
@@ -175,10 +175,11 @@ Status_flashRW overWriteFlash(target_flashRange_t* target, uint32_t DATA)
 	return RW_OK;
 }
 
-Status_flashRW eraseFlash(target_flashRange_t* target, uint32_t DATA_32)
+Status_flashRW eraseFlash(target_flashRange_t* target)
 {
   FLASH_EraseInitTypeDef EraseInitStruct;
-  uint32_t Address = 0;
+  //uint32_t Address = 0;
+  uint32_t PageError;
 
   HAL_FLASH_Unlock();
   FirstSector = GetSector(target->USER_START_ADDR);
@@ -187,8 +188,10 @@ Status_flashRW eraseFlash(target_flashRange_t* target, uint32_t DATA_32)
   EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
   EraseInitStruct.Sector        		= FirstSector;
   EraseInitStruct.NbSectors     	= NbOfSectors;
-
+  HAL_FLASHEx_Erase(&EraseInitStruct, &PageError);
+#if 0
   Address = target->USER_START_ADDR;
+
   while(Address < target->USER_END_ADDR)
     {
       if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, Address, DATA_32) == HAL_OK)
@@ -203,6 +206,7 @@ Status_flashRW eraseFlash(target_flashRange_t* target, uint32_t DATA_32)
     	  return RW_ERROR;
       }
     }
+#endif
 
 
   HAL_FLASH_Lock();

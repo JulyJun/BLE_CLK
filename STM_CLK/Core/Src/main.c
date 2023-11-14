@@ -51,6 +51,8 @@ int _write(int file, char *ptr, int len)
 		+  GetSectorSize(ADDR_FLASH_SECTOR_22) -1 /* End @ of user Flash area : sector start address + sector size -1 */
 #define FLASH_TIME_DATA 0
 #define FLASH_ALARM_DATA 32
+#define INACTIVE_FLASH 0
+#define ACTIVE_FLASH 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -187,19 +189,13 @@ int main(void)
 			HAL_Delay(300);
 			break;
 		case TIME_SETTING:
-			if(cpyflag == 1)
-			{
-				memcpy(copyTime, showTime, sizeof(showTime)/sizeof(showTime[0]));
-				cpyflag = 0;
-			}
 			// 1. timer setting
 			// 2. save at flash
 			timeSetter();
 			if(isSave == true)
 			{
-				saveData[0] = sTime.TimeFormat;
-
 				saveCurrentTime();
+				LCD_Clear();
 			}
 			printf("setting mode\r\n");
 			HAL_Delay(500);
@@ -478,18 +474,15 @@ void timeSetter()
 }
 void saveCurrentTime()
 {
-//	overWriteFlash(&flash, 1);
-//	flash.USER_TARGET_ADDR += 4;
-//	overWriteFlash(&flash, 1);				// AMPM
-//	flash.USER_TARGET_ADDR += 4;
-//	overWriteFlash(&flash, 11);				// HH
-//	flash.USER_TARGET_ADDR += 4;
-//	overWriteFlash(&flash, 30);				// MM
-//	flash.USER_TARGET_ADDR += 4;
-//	overWriteFlash(&flash, 30);				//SS
+	saveData[0] = ACTIVE_FLASH;
+	saveData[1] = ampm[curr_ap];
+	saveData[2] = curr_h;
+	saveData[3] = curr_m;
+	saveData[4] = curr_s;
+	eraseFlash(&flash);
 	for(int index = 0; index < FLASH_TIME_DATA + 20; index += 4)
 	{
-		overWriteFlash(&flash, 0x12345678);
+		overwriteFlash(&flash, saveData[index/4]);
 		flash.USER_TARGET_ADDR += 4;
 	}
 	flash.USER_TARGET_ADDR = flash.USER_START_ADDR;
@@ -520,7 +513,7 @@ void selectSong(void)
 
 		LCD_Clear();
 	}
-	printf("y: %d\r\n",Joycon[1]);
+	printf("y: %ld\r\n",Joycon[1]);
 	songIndex %= 2;
 	if(songIndex == 0)
 	{

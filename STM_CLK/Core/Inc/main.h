@@ -164,6 +164,7 @@ void set_alarm(uint8_t hh, uint8_t mm, uint8_t ss);
 void set_date(uint8_t ww, uint8_t mm, uint8_t dd, uint8_t yy);
 void get_time();
 void selectSong();
+void timeSetter();
 void saveCurrentTime();
 void saveCurrentSong();
 bool IsRight(void);
