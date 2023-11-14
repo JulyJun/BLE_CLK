@@ -118,6 +118,8 @@ void Error_Handler(void);
 #define LD2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+#define LCD_SIZE 16
+
 typedef enum
 {
 	UP = 3000,
@@ -161,6 +163,9 @@ void set_time(uint8_t hh, uint8_t mm, uint8_t ss);
 void set_alarm(uint8_t hh, uint8_t mm, uint8_t ss);
 void set_date(uint8_t ww, uint8_t mm, uint8_t dd, uint8_t yy);
 void get_time();
+void selectSong();
+void saveCurrentTime();
+void saveCurrentSong();
 bool IsRight(void);
 bool IsLeft(void);
 bool IsUP(void);

@@ -15,6 +15,12 @@
  */
 uint32_t FirstSector, NbOfSectors;
 
+void initFlash(target_flashRange_t* target, uint32_t startAddr, uint32_t endAddr)
+{
+	target->USER_START_ADDR = startAddr;
+	target->USER_END_ADDR = endAddr;
+	target->USER_TARGET_ADDR = target->USER_START_ADDR;
+}
 
 uint32_t GetSector(uint32_t Address)
 {
@@ -150,31 +156,52 @@ Status_flashRW readFlash(uint32_t StartADDR)
   printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
   return RW_OK;
 }
-Status_flashRW eraseFlash(target_flashRange_t* target, uint32_t ADDR_FLASH_SECTOR_x, uint32_t DATA_32)
+
+Status_flashRW overWriteFlash(target_flashRange_t* target, uint32_t DATA)
+{
+	HAL_FLASH_Unlock();
+	uint32_t Address = target->USER_TARGET_ADDR;
+	if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, Address, DATA) == HAL_OK)
+	{
+		printf("Changed: ");
+		readFlash(Address);
+	}
+	else
+	{
+		return RW_ERROR;
+	}
+
+	HAL_FLASH_Lock();
+	return RW_OK;
+}
+
+Status_flashRW eraseFlash(target_flashRange_t* target, uint32_t DATA_32)
 {
   FLASH_EraseInitTypeDef EraseInitStruct;
   uint32_t Address = 0;
-  HAL_FLASH_Unlock();
-  FirstSector = GetSector(target->FLASH_USER_START_ADDR);
-  NbOfSectors = GetSector(target->FLASH_USER_END_ADDR) - FirstSector + 1;
-  EraseInitStruct.TypeErase = FLASH_TYPEERASE_SECTORS;
-  EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
-  EraseInitStruct.Sector        = FirstSector;
-  EraseInitStruct.NbSectors     = NbOfSectors;
 
-  Address = target->FLASH_USER_START_ADDR;
-  while(Address < target->FLASH_USER_END_ADDR)
+  HAL_FLASH_Unlock();
+  FirstSector = GetSector(target->USER_START_ADDR);
+  NbOfSectors = GetSector(target->USER_END_ADDR) - FirstSector + 1;
+  EraseInitStruct.TypeErase 		= FLASH_TYPEERASE_SECTORS;
+  EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
+  EraseInitStruct.Sector        		= FirstSector;
+  EraseInitStruct.NbSectors     	= NbOfSectors;
+
+  Address = target->USER_START_ADDR;
+  while(Address < target->USER_END_ADDR)
     {
       if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, Address, DATA_32) == HAL_OK)
-	{
-	  printf("Changed: ");
-	  readFlash(Address);
-	  Address = Address + 4;
-	}
+      {
+    	  printf("Changed: ");
+    	  readFlash(Address);
+    	  Address = Address + 4;
+      }
       else
-	{
-	  printf("error occurred");
-	}
+      {
+    	  printf("error occurred");
+    	  return RW_ERROR;
+      }
     }
 
 

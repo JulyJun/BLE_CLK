@@ -1,39 +1,43 @@
-18:17:38 **** Incremental Build of configuration Debug for project STM_CLK ****
+16:37:13 **** Incremental Build of configuration Debug for project STM_CLK ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 ../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:223:25: warning: implicit declaration of function 'timeSetter' [-Wimplicit-function-declaration]
-  223 |                         timeSetter();
+../Core/Src/main.c:196:25: warning: implicit declaration of function 'timeSetter' [-Wimplicit-function-declaration]
+  196 |                         timeSetter();
       |                         ^~~~~~~~~~
-../Core/Src/main.c:226:33: warning: implicit declaration of function 'saveCurrentTime' [-Wimplicit-function-declaration]
-  226 |                                 saveCurrentTime();
-      |                                 ^~~~~~~~~~~~~~~
 ../Core/Src/main.c: In function 'get_time':
-../Core/Src/main.c:372:13: warning: unused variable 'longer' [-Wunused-variable]
-  372 |         int longer;
+../Core/Src/main.c:356:13: warning: unused variable 'longer' [-Wunused-variable]
+  356 |         int longer;
       |             ^~~~~~
 ../Core/Src/main.c: At top level:
-../Core/Src/main.c:388:6: warning: conflicting types for 'timeSetter'; have 'void(void)'
-  388 | void timeSetter(void)
+../Core/Src/main.c:372:6: warning: conflicting types for 'timeSetter'; have 'void()'
+  372 | void timeSetter()
       |      ^~~~~~~~~~
-../Core/Src/main.c:223:25: note: previous implicit declaration of 'timeSetter' with type 'void(void)'
-  223 |                         timeSetter();
+../Core/Src/main.c:196:25: note: previous implicit declaration of 'timeSetter' with type 'void()'
+  196 |                         timeSetter();
       |                         ^~~~~~~~~~
-../Core/Src/main.c:494:6: warning: conflicting types for 'saveCurrentTime'; have 'void(void)'
-  494 | void saveCurrentTime(void)
-      |      ^~~~~~~~~~~~~~~
-../Core/Src/main.c:226:33: note: previous implicit declaration of 'saveCurrentTime' with type 'void(void)'
-  226 |                                 saveCurrentTime();
-      |                                 ^~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:522:21: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  522 |         printf("y: %d\r\n",Joycon[1]);
+      |                    ~^      ~~~~~~~~~
+      |                     |            |
+      |                     int          uint32_t {aka long unsigned int}
+      |                    %ld
+../Core/Src/main.c:533:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  533 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:533:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
 arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: STM_CLK.elf
  
 arm-none-eabi-size   STM_CLK.elf 
 arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
 arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
-   text	   data	    bss	    dec	    hex	filename
-  41616	    120	   4720	  46456	   b578	STM_CLK.elf
 arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  44928	    128	   4792	  49848	   c2b8	STM_CLK.elf
 Finished building: default.size.stdout
  
 Finished building: STM_CLK.hex
@@ -43,5 +47,5 @@ Finished building: STM_CLK.bin
 Finished building: STM_CLK.list
  
 
-18:17:39 Build Finished. 0 errors, 5 warnings. (took 1s.380ms)
+16:37:15 Build Finished. 0 errors, 5 warnings. (took 1s.489ms)
 

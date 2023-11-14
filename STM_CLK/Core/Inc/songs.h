@@ -38,7 +38,8 @@
 
 
 
-void threeBear_song();
-void springWater_song();
+void threeBear_song(int* index);
+void springWater_song(int* index);
+void remove_tone();
 
 #endif /* INC_SONGS_H_ */

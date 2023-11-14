@@ -46,10 +46,11 @@ int _write(int file, char *ptr, int len)
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define FLASH_USER_START_ADDR   ADDR_FLASH_SECTOR_10
-#define FLASH_USER_END_ADDR     ADDR_FLASH_SECTOR_10  \
-		+  GetSectorSize(ADDR_FLASH_SECTOR_10) -1 /* End @ of user Flash area : sector start address + sector size -1 */
-
+#define FLASH_USER_START_ADDR   ADDR_FLASH_SECTOR_22
+#define FLASH_USER_END_ADDR     ADDR_FLASH_SECTOR_22  \
+		+  GetSectorSize(ADDR_FLASH_SECTOR_22) -1 /* End @ of user Flash area : sector start address + sector size -1 */
+#define FLASH_TIME_DATA 0
+#define FLASH_ALARM_DATA 32
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -65,13 +66,16 @@ CLK_State_t clock_state = NORMAL_STATE;
 uint8_t rx3Data, rx4Data;
 
 RTC_AlarmTypeDef sAlarm;
+RTC_DateTypeDef sDate;
+	RTC_TimeTypeDef sTime;
+
 uint32_t Joycon[2];
 
-char showTime[16] = {0};
-char showDate[16] = {0};
+char showTime[LCD_SIZE] = {0};
+char showDate[LCD_SIZE] = {0};
 char ampm[2][3] = {"AM", "PM"};
-char copyTime[16];
-char controlTime[16] = {0,};
+char copyTime[LCD_SIZE];
+char controlTime[LCD_SIZE] = {0,};
 bleBuffer_t ble = {0};
 uint8_t cpyflag = 0, oneClick;
 bool isSave = false;
@@ -84,7 +88,10 @@ unsigned int stime, etime = 0, interval, ctime, count = 0;
 unsigned int dbclk, holdclk;
 buttonState buttonPosition;
 timeFormat_t timeFormatter;
+target_flashRange_t flash;
 unsigned char buf[120];
+
+void (*songList[2])(int*) = { springWater_song, threeBear_song };
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,95 +103,57 @@ static void MX_NVIC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
-
 #define DATA_32                 ((uint32_t)0x12345678)
 
 uint32_t SECTORError = 0;
 __IO uint32_t data32 = 0 , MemoryProgramStatus = 0;
-
-//Status_flashRW readFlash(uint32_t StartADDR)
-//{
-//	unsigned int value = *(unsigned int*)StartADDR;
-//	printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
-//	return RW_OK;
-//}
-//Status_flashRW eraseFlash(uint32_t ADDR_FLASH_SECTOR_x)
-//{
-//	uint32_t Address = 0;
-//	HAL_FLASH_Unlock();
-//	FirstSector = GetSector(FLASH_USER_START_ADDR);
-//	NbOfSectors = GetSector(FLASH_USER_END_ADDR) - FirstSector + 1;
-//	EraseInitStruct.TypeErase = FLASH_TYPEERASE_SECTORS;
-//	EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
-//	EraseInitStruct.Sector        = FirstSector;
-//	EraseInitStruct.NbSectors     = NbOfSectors;
-//
-//	Address = FLASH_USER_START_ADDR;
-//	while(Address < FLASH_USER_END_ADDR)
-//	{
-//		if(HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, Address, DATA_32) == HAL_OK)
-//		{
-//			printf("Changed: ");
-//			readFlash(Address);
-//			Address = Address + 4;
-//		}
-//		else
-//		{
-//			printf("error occurred");
-//		}
-//	}
-//
-//
-//	HAL_FLASH_Lock();
-//	return RW_OK;
-//}
+uint32_t saveData[5];
 
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
+ * @brief  The application entry point.
+ * @retval int
+ */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
+	/* USER CODE BEGIN 1 */
 
+	/* USER CODE END 1 */
 
-  /* USER CODE END 1 */
+	/* MCU Configuration--------------------------------------------------------*/
 
-  /* MCU Configuration--------------------------------------------------------*/
+	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+	HAL_Init();
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+	/* USER CODE BEGIN Init */
 
-  /* USER CODE BEGIN Init */
+	/* USER CODE END Init */
 
-  /* USER CODE END Init */
+	/* Configure the system clock */
+	SystemClock_Config();
 
-  /* Configure the system clock */
-  SystemClock_Config();
+	/* USER CODE BEGIN SysInit */
 
-  /* USER CODE BEGIN SysInit */
+	/* USER CODE END SysInit */
 
-  /* USER CODE END SysInit */
+	/* Initialize all configured peripherals */
+	MX_GPIO_Init();
+	MX_DMA_Init();
+	MX_ETH_Init();
+	MX_USART3_UART_Init();
+	MX_USB_OTG_FS_PCD_Init();
+	MX_I2C1_Init();
+	MX_RTC_Init();
+	MX_TIM2_Init();
+	MX_UART4_Init();
+	MX_ADC1_Init();
+	MX_TIM3_Init();
 
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_DMA_Init();
-  MX_ETH_Init();
-  MX_USART3_UART_Init();
-  MX_USB_OTG_FS_PCD_Init();
-  MX_I2C1_Init();
-  MX_RTC_Init();
-  MX_TIM2_Init();
-  MX_UART4_Init();
-  MX_ADC1_Init();
-  MX_TIM3_Init();
-
-  /* Initialize interrupts */
-  MX_NVIC_Init();
-  /* USER CODE BEGIN 2 */
+	/* Initialize interrupts */
+	MX_NVIC_Init();
+	/* USER CODE BEGIN 2 */
+	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
 	HAL_ADC_Start_DMA(&hadc1, Joycon, sizeof(Joycon)/sizeof(Joycon[0]));
 	HAL_UART_Receive_IT(&huart3, (uint8_t*)&rx3Data, sizeof(rx3Data));
 	HAL_UART_Receive_IT(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data));
@@ -197,20 +166,25 @@ int main(void)
 	set_date(RTC_WEEKDAY_MONDAY, 11, 13, 23);
 	set_time(13,25,0);
 	set_alarm(0, 0, 5);
+
+	initFlash(&flash, FLASH_USER_START_ADDR, FLASH_USER_END_ADDR);
+
 	//eraseFlash(FLASH_USER_START_ADDR);
 	//springWater_song();
-  /* USER CODE END 2 */
+	/* USER CODE END 2 */
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+	/* Infinite loop */
+	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
 		//printf("x: %d\r\ny: %d\r\n",Joycon[0],Joycon[1]);
 		//printf("current state: %d\r\n", clock_state);
+#if 1
 		switch(clock_state)
 		{
 		case NORMAL_STATE:
 			get_time();
+			HAL_Delay(300);
 			break;
 		case TIME_SETTING:
 			if(cpyflag == 1)
@@ -223,9 +197,12 @@ int main(void)
 			timeSetter();
 			if(isSave == true)
 			{
+				saveData[0] = sTime.TimeFormat;
+
 				saveCurrentTime();
 			}
 			printf("setting mode\r\n");
+			HAL_Delay(500);
 			break;
 		case ALARM_TIME_SETTING:
 			// 1. alarm time setting
@@ -235,99 +212,110 @@ int main(void)
 		case MUSIC_SELECT:
 			// 1. music select
 			// 2. save at flash
+			selectSong();
+//			if(isSave == true)
+//			{
+//				remove_tone();
+//				saveCurrentSong();
+//				LCD_Clear();
+//			}
 			printf("music mode\r\n");
 			break;
 		default:
 			clock_state = NORMAL_STATE;
 			break;
 		}
-		HAL_Delay(300);
-    /* USER CODE END WHILE */
+#endif
+#if 0
+		//selectSong();
+#endif
 
-    /* USER CODE BEGIN 3 */
+		/* USER CODE END WHILE */
+
+		/* USER CODE BEGIN 3 */
 	}
-  /* USER CODE END 3 */
+	/* USER CODE END 3 */
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+ * @brief System Clock Configuration
+ * @retval None
+ */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+	RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+	RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /** Configure the main internal regulator output voltage
-  */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+	/** Configure the main internal regulator output voltage
+	 */
+	__HAL_RCC_PWR_CLK_ENABLE();
+	__HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
-  RCC_OscInitStruct.LSEState = RCC_LSE_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 4;
-  RCC_OscInitStruct.PLL.PLLN = 168;
-  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 7;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+	/** Initializes the RCC Oscillators according to the specified parameters
+	 * in the RCC_OscInitTypeDef structure.
+	 */
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE|RCC_OSCILLATORTYPE_LSE;
+	RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
+	RCC_OscInitStruct.LSEState = RCC_LSE_ON;
+	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
+	RCC_OscInitStruct.PLL.PLLM = 4;
+	RCC_OscInitStruct.PLL.PLLN = 168;
+	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+	RCC_OscInitStruct.PLL.PLLQ = 7;
+	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+	{
+		Error_Handler();
+	}
 
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
+	/** Initializes the CPU, AHB and APB buses clocks
+	 */
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+			|RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
+	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
-  {
-    Error_Handler();
-  }
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+	{
+		Error_Handler();
+	}
 }
 
 /**
-  * @brief NVIC Configuration.
-  * @retval None
-  */
+ * @brief NVIC Configuration.
+ * @retval None
+ */
 static void MX_NVIC_Init(void)
 {
-  /* TIM2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(TIM2_IRQn);
-  /* RTC_Alarm_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
-  /* EXTI9_5_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-  /* ADC_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(ADC_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(ADC_IRQn);
-  /* USART3_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(USART3_IRQn);
-  /* UART4_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(UART4_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(UART4_IRQn);
-  /* EXTI15_10_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+	/* TIM2_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(TIM2_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(TIM2_IRQn);
+	/* RTC_Alarm_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(RTC_Alarm_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(RTC_Alarm_IRQn);
+	/* EXTI9_5_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+	/* ADC_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(ADC_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(ADC_IRQn);
+	/* USART3_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(USART3_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(USART3_IRQn);
+	/* UART4_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(UART4_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(UART4_IRQn);
+	/* EXTI15_10_IRQn interrupt configuration */
+	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 
 /* USER CODE BEGIN 4 */
 void set_time(uint8_t hh, uint8_t mm, uint8_t ss)
 {
-	RTC_TimeTypeDef sTime;
+	//RTC_TimeTypeDef sTime;
 
 	sTime.Hours = hh + 1;
 	sTime.Minutes = mm;
@@ -356,7 +344,7 @@ void set_alarm(uint8_t hh, uint8_t mm, uint8_t ss)
 }
 void set_date(uint8_t ww, uint8_t mm, uint8_t dd, uint8_t yy)
 {
-	RTC_DateTypeDef sDate;
+	//RTC_DateTypeDef sDate;
 
 	sDate.WeekDay = ww;
 	sDate.Month = mm;
@@ -367,9 +355,6 @@ void set_date(uint8_t ww, uint8_t mm, uint8_t dd, uint8_t yy)
 
 void get_time(void)
 {
-	RTC_DateTypeDef sDate;
-	RTC_TimeTypeDef sTime;
-	int longer;
 	HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
 	HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
 	curr_ap = sTime.TimeFormat;
@@ -385,7 +370,7 @@ void get_time(void)
 }
 
 
-void timeSetter(void)
+void timeSetter()
 {
 	static bool toggleChar = false;
 	static uint8_t choice = 0;
@@ -409,93 +394,147 @@ void timeSetter(void)
 	//"%s %02d:%02d:%02d"
 	switch (choice)
 	{
-		case AMPM:
-			if(toggleChar)
+	case AMPM:
+		if(toggleChar)
+		{
+			sprintf(controlTime, "__ %02d:%02d:%02d",curr_h,curr_m,curr_s);
+		}
+		else
+		{
+			if(IsUP())
 			{
-				sprintf(controlTime, "__ %02d:%02d:%02d",curr_h,curr_m,curr_s);
+				curr_ap++;
 			}
-			else
+			else if(IsDown())
 			{
-				if(IsUP())
-				{
-					curr_ap++;
-				}
-				else if(IsDown())
-				{
-					curr_ap--;
-				}
-				curr_ap = curr_ap % 2;
-				sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+				curr_ap--;
 			}
-			break;
-		case HOUR:
-			if(toggleChar)
+			curr_ap = curr_ap % 2;
+			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+		}
+		break;
+	case HOUR:
+		if(toggleChar)
+		{
+			sprintf(controlTime, "%s __:%02d:%02d",ampm[curr_ap%2],curr_m,curr_s);
+		}
+		else
+		{
+			if(IsUP())
 			{
-				sprintf(controlTime, "%s __:%02d:%02d",ampm[curr_ap%2],curr_m,curr_s);
+				curr_h++;
 			}
-			else
+			else if(IsDown())
 			{
-				if(IsUP())
-				{
-					curr_h++;
-				}
-				else if(IsDown())
-				{
-					curr_h--;
-				}
-				curr_h %= 24;
-				sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+				curr_h--;
 			}
-			break;
-		case MIN:
-			if(toggleChar)
+			curr_h %= 24;
+			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+		}
+		break;
+	case MIN:
+		if(toggleChar)
+		{
+			sprintf(controlTime, "%s %02d:__:%02d",ampm[curr_ap],curr_h,curr_s);
+		}
+		else
+		{
+			if(IsUP())
 			{
-				sprintf(controlTime, "%s %02d:__:%02d",ampm[curr_ap],curr_h,curr_s);
+				curr_m++;
 			}
-			else
+			else if(IsDown())
 			{
-				if(IsUP())
-				{
-					curr_m++;
-				}
-				else if(IsDown())
-				{
-					curr_m--;
-				}
-				curr_m %= 60;
-				sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+				curr_m--;
 			}
-			break;
-		case SEC:
-			if(toggleChar)
+			curr_m %= 60;
+			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+		}
+		break;
+	case SEC:
+		if(toggleChar)
+		{
+			sprintf(controlTime, "%s %02d:%02d:__",ampm[curr_ap],curr_h,curr_m);
+		}
+		else
+		{
+			if(IsUP())
 			{
-				sprintf(controlTime, "%s %02d:%02d:__",ampm[curr_ap],curr_h,curr_m);
+				curr_s++;
 			}
-			else
+			else if(IsDown())
 			{
-				if(IsUP())
-				{
-					curr_s++;
-				}
-				else if(IsDown())
-				{
-					curr_s--;
-				}
-				curr_s %= 60;
-				sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+				curr_s--;
 			}
-			break;
-		default:
-			break;
+			curr_s %= 60;
+			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+		}
+		break;
+	default:
+		break;
 	}
 	LCD_PrintAll("Set Time      ", controlTime);
 	toggleChar = !toggleChar;
 }
-void saveCurrentTime(void)
+void saveCurrentTime()
+{
+//	overWriteFlash(&flash, 1);
+//	flash.USER_TARGET_ADDR += 4;
+//	overWriteFlash(&flash, 1);				// AMPM
+//	flash.USER_TARGET_ADDR += 4;
+//	overWriteFlash(&flash, 11);				// HH
+//	flash.USER_TARGET_ADDR += 4;
+//	overWriteFlash(&flash, 30);				// MM
+//	flash.USER_TARGET_ADDR += 4;
+//	overWriteFlash(&flash, 30);				//SS
+	for(int index = 0; index < FLASH_TIME_DATA + 20; index += 4)
+	{
+		overWriteFlash(&flash, 0x12345678);
+		flash.USER_TARGET_ADDR += 4;
+	}
+	flash.USER_TARGET_ADDR = flash.USER_START_ADDR;
+	isSave = false;
+	clock_state = NORMAL_STATE;
+}
+void saveCurrentSong()
 {
 	isSave = false;
 	clock_state = NORMAL_STATE;
 }
+void selectSong(void)
+{
+	static uint8_t songIndex = 0, now_playing = 0;
+	char currentSong[LCD_SIZE] = {0};
+
+	if(IsUP())
+	{
+		songIndex++;
+		now_playing = 0;
+
+		LCD_Clear();
+	}
+	else if(IsDown())
+	{
+		songIndex--;
+		now_playing = 0;
+
+		LCD_Clear();
+	}
+	printf("y: %d\r\n",Joycon[1]);
+	songIndex %= 2;
+	if(songIndex == 0)
+	{
+		memcpy(currentSong, "1. Spring Water", sizeof(currentSong)/sizeof(currentSong[0]));
+	}
+	else if(songIndex == 1)
+	{
+		memcpy(currentSong, "2. Three Bears", sizeof(currentSong)/sizeof(currentSong[0]));
+	}
+	LCD_PrintAll("Wake Up Call", currentSong);
+	songList[songIndex](&now_playing);
+
+}
+
 void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
 {
 	HAL_GPIO_TogglePin(GPIOB, LD1_Pin|LD2_Pin|LD3_Pin);
@@ -523,7 +562,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 				printf("OFF\r\n");
 				holdclk = interval;
 				oneClick++;
-								oneClick %= 2;
+				oneClick %= 2;
 			}
 			else if(pinstate == GPIO_PIN_RESET)
 			{
@@ -549,6 +588,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 			else if(dbclk >= 2)
 			{
 				printf("***double click activate***\r\n");
+				if(clock_state == NORMAL_STATE)
+				{
+					clock_state = MUSIC_SELECT;
+				}
 				dbclk = 0;
 			}
 			// Timer Setting State
@@ -561,7 +604,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 					clock_state = TIME_SETTING;
 					printf("set to Time\r\n");
 				}
-				else if(clock_state == TIME_SETTING)
+				else if(clock_state == TIME_SETTING || clock_state == MUSIC_SELECT)
 				{
 					printf("set to Save\r\n");
 					isSave = true;
@@ -643,33 +686,33 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
 void Error_Handler(void)
 {
-  /* USER CODE BEGIN Error_Handler_Debug */
+	/* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
 	__disable_irq();
 	while (1)
 	{
 	}
-  /* USER CODE END Error_Handler_Debug */
+	/* USER CODE END Error_Handler_Debug */
 }
 
 #ifdef  USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
 {
-  /* USER CODE BEGIN 6 */
+	/* USER CODE BEGIN 6 */
 	/* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
+	/* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */

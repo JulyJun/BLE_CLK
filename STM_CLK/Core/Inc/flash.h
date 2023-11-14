@@ -70,8 +70,9 @@ typedef enum
 
 typedef struct
 {
-  uint32_t FLASH_USER_START_ADDR;
-  uint32_t FLASH_USER_END_ADDR;
+  uint32_t USER_START_ADDR;
+  uint32_t USER_END_ADDR;
+  uint32_t USER_TARGET_ADDR;				// Should be increased or decreased by 4
 } target_flashRange_t;
 
 
@@ -79,7 +80,10 @@ uint32_t GetSector(uint32_t Address);
 
 uint32_t GetSectorSize(uint32_t Sector);
 
+// target addr fix to start addr
+void initFlash(target_flashRange_t* target, uint32_t startAddr, uint32_t endAddr);
+// Read 4 byte.
 Status_flashRW readFlash(uint32_t StartADDR);
-
-Status_flashRW eraseFlash(target_flashRange_t* target, uint32_t ADDR_FLASH_SECTOR_x, uint32_t DATA_32);
+Status_flashRW overWriteFlash(target_flashRange_t* target, uint32_t DATA);
+Status_flashRW eraseFlash(target_flashRange_t* target, uint32_t DATA_32);
 #endif /* INC_FLASH_H_ */

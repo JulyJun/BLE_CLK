@@ -46,28 +46,44 @@ const unsigned int springWater_intvl[] = {
 		0
 };
 
-void threeBear_song()
+void threeBear_song(int* index)
 {
-	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
-	for(int i = 0; i < sizeof(threeBears_note)/sizeof(threeBears_note[0]); i++)
+	//HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+	/*
+	for(int index = 0; index < sizeof(threeBears_note)/sizeof(threeBears_note[0]); index++)
 	{
 //		TIM3->ARR = note[i];
 //		TIM3->CCR3 = note[i]/2;
 //		HAL_Delay(intr[i]);	// 소리 길이
 //		TIM3->CCR3 = 0;
 //		HAL_Delay(500);	// 쉬는 길이
-		TIM3->ARR = threeBears_note[i];
-		TIM3->CCR3 = threeBears_note[i]/2;
+		TIM3->ARR = threeBears_note[index];
+		TIM3->CCR3 = threeBears_note[index]/2;
 		HAL_Delay(500);
 		TIM3->CCR3 = 0;
-		HAL_Delay(threeBears_intvl[i]);
-		TIM3->CCR3 = threeBears_note[i]/2;
+		HAL_Delay(threeBears_intvl[index]);
+		TIM3->CCR3 = threeBears_note[index]/2;
+	}
+	*/
+	TIM3->ARR = threeBears_note[*index];
+	TIM3->CCR3 = threeBears_note[*index]/2;
+	HAL_Delay(300);
+	TIM3->CCR3 = 0;
+	HAL_Delay(threeBears_intvl[*index]);
+	TIM3->CCR3 = threeBears_note[*index]/2;
+	if(*index > sizeof(threeBears_note)/sizeof(threeBears_note[0])-1)
+	{
+		*index = 0;
+	}
+	else
+	{
+		(*index) ++;
 	}
 }
 
-void springWater_song()
+void springWater_song(int* index)
 {
-	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
+	/*
 	for(int i = 0; i < sizeof(springWater_note)/sizeof(springWater_note[0]); i++)
 	{
 //		TIM3->ARR = note[i];
@@ -75,12 +91,30 @@ void springWater_song()
 //		HAL_Delay(intr[i]);	// 소리 길이
 //		TIM3->CCR3 = 0;
 //		HAL_Delay(500);	// 쉬는 길이
-		TIM3->ARR = springWater_note[i];
-		TIM3->CCR3 = springWater_note[i]/2;
+		TIM3->ARR = springWater_note[index];
+		TIM3->CCR3 = springWater_note[index]/2;
 		HAL_Delay(500);
 		TIM3->CCR3 = 0;
-		HAL_Delay(springWater_intvl[i]);
-		TIM3->CCR3 = springWater_note[i]/2;
+		HAL_Delay(springWater_intvl[index]);
+		TIM3->CCR3 = springWater_note[index]/2;
+	}
+	*/
+	TIM3->ARR = springWater_note[*index];
+	TIM3->CCR3 = springWater_note[*index]/2;
+	HAL_Delay(300);
+	TIM3->CCR3 = 0;
+	HAL_Delay(springWater_intvl[*index]);
+	TIM3->CCR3 = springWater_note[*index]/2;
+	if(*index > sizeof(springWater_note) / sizeof(springWater_note[0])-1)
+	{
+		*index = 0;
+	}
+	else
+	{
+		(*index) ++;
 	}
 }
-
+void remove_tone()
+{
+	TIM3->ARR = RESET;
+}

@@ -1,4 +1,6 @@
-../Core/Src/flash.c:19:10:GetSector	47
-../Core/Src/flash.c:127:10:GetSectorSize	11
-../Core/Src/flash.c:147:16:readFlash	1
-../Core/Src/flash.c:153:16:eraseFlash	3
+../Core/Src/flash.c:18:6:initFlash	1
+../Core/Src/flash.c:25:10:GetSector	47
+../Core/Src/flash.c:133:10:GetSectorSize	11
+../Core/Src/flash.c:153:16:readFlash	1
+../Core/Src/flash.c:160:16:overWriteFlash	2
+../Core/Src/flash.c:178:16:eraseFlash	3
