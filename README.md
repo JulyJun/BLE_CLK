@@ -1,4 +1,4 @@
-# ST_CLK
+# [STM32] Clock
 
  ## Abstraction
   블루투스와 통신가능한 디지털 시계
