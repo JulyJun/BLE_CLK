@@ -150,11 +150,12 @@ uint32_t GetSectorSize(uint32_t Sector)
   return sectorsize;
 }
 
-Status_flashRW readFlash(uint32_t StartADDR)
+uint32_t readFlash(uint32_t StartADDR)
 {
   unsigned int value = *(unsigned int*)StartADDR;
+  // uint8_t value = *((uint8_t*)StartADDR + 1);
   printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
-  return RW_OK;
+  return value;
 }
 
 Status_flashRW overwriteFlash(target_flashRange_t* target, uint32_t DATA)

@@ -1,17 +1,28 @@
-19:08:25 **** Incremental Build of configuration Debug for project STM_CLK ****
+16:56:55 **** Incremental Build of configuration Debug for project STM_CLK ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'saveCurrentTime':
-../Core/Src/main.c:478:21: warning: assignment to 'uint32_t' {aka 'long unsigned int'} from 'char *' makes integer from pointer without a cast [-Wint-conversion]
-  478 |         saveData[1] = ampm[curr_ap];
-      |                     ^
-../Core/Src/main.c: In function 'selectSong':
-../Core/Src/main.c:527:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
-  527 |         songList[songIndex](&now_playing);
-      |                             ^~~~~~~~~~~~
-      |                             |
-      |                             uint8_t * {aka unsigned char *}
-../Core/Src/main.c:527:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:25: warning: implicit declaration of function 'BLE_Command' [-Wimplicit-function-declaration]
+  188 |                         BLE_Command();
+      |                         ^~~~~~~~~~~
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:714:6: warning: conflicting types for 'BLE_Command'; have 'void()'
+  714 | void BLE_Command()
+      |      ^~~~~~~~~~~
+../Core/Src/main.c:188:25: note: previous implicit declaration of 'BLE_Command' with type 'void()'
+  188 |                         BLE_Command();
+      |                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'BLE_Command':
+../Core/Src/main.c:720:22: warning: multi-character character constant [-Wmultichar]
+  720 |                 case ' T':
+      |                      ^~~~
+../Core/Src/main.c:720:17: warning: case label value exceeds maximum value for type [-Wswitch-outside-range]
+  720 |                 case ' T':
+      |                 ^~~~
 arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: STM_CLK.elf
  
@@ -19,7 +30,7 @@ arm-none-eabi-size   STM_CLK.elf
 arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
 arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
    text	   data	    bss	    dec	    hex	filename
-  46356	    128	   4800	  51284	   c854	STM_CLK.elf
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
 arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
 Finished building: default.size.stdout
  
@@ -30,5 +41,5 @@ Finished building: STM_CLK.bin
 Finished building: STM_CLK.list
  
 
-19:08:26 Build Finished. 0 errors, 2 warnings. (took 1s.498ms)
+16:56:56 Build Finished. 0 errors, 5 warnings. (took 1s.539ms)
 

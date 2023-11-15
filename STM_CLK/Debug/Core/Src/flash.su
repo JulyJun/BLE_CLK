@@ -1,6 +1,6 @@
 ../Core/Src/flash.c:18:6:initFlash	24	static
 ../Core/Src/flash.c:25:10:GetSector	24	static
 ../Core/Src/flash.c:133:10:GetSectorSize	24	static
-../Core/Src/flash.c:153:16:readFlash	24	static
-../Core/Src/flash.c:160:16:overwriteFlash	32	static
-../Core/Src/flash.c:178:16:eraseFlash	40	static
+../Core/Src/flash.c:153:10:readFlash	24	static
+../Core/Src/flash.c:161:16:overwriteFlash	32	static
+../Core/Src/flash.c:179:16:eraseFlash	40	static

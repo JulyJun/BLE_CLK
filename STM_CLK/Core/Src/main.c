@@ -51,8 +51,7 @@ int _write(int file, char *ptr, int len)
 		+  GetSectorSize(ADDR_FLASH_SECTOR_22) -1 /* End @ of user Flash area : sector start address + sector size -1 */
 #define FLASH_TIME_DATA 0
 #define FLASH_ALARM_DATA 32
-#define INACTIVE_FLASH 0
-#define ACTIVE_FLASH 1
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -69,8 +68,8 @@ uint8_t rx3Data, rx4Data;
 
 RTC_AlarmTypeDef sAlarm;
 RTC_DateTypeDef sDate;
-	RTC_TimeTypeDef sTime;
-
+RTC_TimeTypeDef sTime;
+flashStatus_e status_f;
 uint32_t Joycon[2];
 
 char showTime[LCD_SIZE] = {0};
@@ -82,7 +81,10 @@ bleBuffer_t ble = {0};
 uint8_t cpyflag = 0, oneClick;
 bool isSave = false;
 
-uint8_t curr_ap, curr_h, curr_m, curr_s;
+uint8_t temp_ap = 0xFF, temp_h = 0xFF, temp_m = 0xFF, temp_s = 0xFF;
+uint8_t curr_ap = 0xFF, curr_h = 0xFF, curr_m = 0xFF, curr_s = 0xFF;
+uint8_t alarm_ap = 0xFF, alarm_h = 0xFF, alarm_m = 0xFF, alarm_s = 0xFF;
+uint8_t songIndex = 0; // default song index
 
 int adc1_val, adc2_val;
 
@@ -105,11 +107,8 @@ static void MX_NVIC_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-#define DATA_32                 ((uint32_t)0x12345678)
-
 uint32_t SECTORError = 0;
-__IO uint32_t data32 = 0 , MemoryProgramStatus = 0;
-uint32_t saveData[5];
+uint32_t saveData[DATASIZE_FLASH];
 
 /* USER CODE END 0 */
 
@@ -159,18 +158,16 @@ int main(void)
 	HAL_ADC_Start_DMA(&hadc1, Joycon, sizeof(Joycon)/sizeof(Joycon[0]));
 	HAL_UART_Receive_IT(&huart3, (uint8_t*)&rx3Data, sizeof(rx3Data));
 	HAL_UART_Receive_IT(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data));
-
-	//unsigned int value, addr = FLASH_USER_START_ADDR, cnt = 0;
-	//unsigned char buf[30];
 	HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BIN);
 	init();
 	LCD_Clear();
-	set_date(RTC_WEEKDAY_MONDAY, 11, 13, 23);
-	set_time(13,25,0);
-	set_alarm(0, 0, 5);
+//	set_date(RTC_WEEKDAY_MONDAY, 11, 13, 23);
+//	set_time(13,25,0);
+//	set_alarm(0, 0, 5);
 
 	initFlash(&flash, FLASH_USER_START_ADDR, FLASH_USER_END_ADDR);
 
+	clockEntry();
 	//eraseFlash(FLASH_USER_START_ADDR);
 	//springWater_song();
 	/* USER CODE END 2 */
@@ -187,14 +184,20 @@ int main(void)
 		case NORMAL_STATE:
 			get_time();
 			HAL_Delay(300);
+			ble.receivedCommand_flag = false;
+			BLE_Command();
 			break;
 		case TIME_SETTING:
 			// 1. timer setting
 			// 2. save at flash
-			timeSetter();
-			if(isSave == true)
+			timeSetter(TIME_SET);
+			LCD_PrintAll("Set Time      ", controlTime);
+			if(isSave == true || ble.receivedCommand_flag == true)
 			{
-				saveCurrentTime();
+				saveCurrentTime(TIME_SET);
+				set_time(curr_h, curr_m, curr_s);
+				ble.receivedCommand_flag = false;
+				BLE_Command();
 				LCD_Clear();
 			}
 			printf("setting mode\r\n");
@@ -203,18 +206,31 @@ int main(void)
 		case ALARM_TIME_SETTING:
 			// 1. alarm time setting
 			// 2. save at flash
+			timeSetter(ALARM_SET);
+			LCD_PrintAll("Wake Up Time", controlTime);
+			if(isSave == true || ble.receivedCommand_flag)
+			{
+				saveCurrentTime(ALARM_SET);
+				set_alarm(alarm_h, alarm_m, alarm_s);
+				ble.receivedCommand_flag = false;
+				BLE_Command();
+				LCD_Clear();
+			}
 			printf("alarm mode\r\n");
+			HAL_Delay(500);
 			break;
 		case MUSIC_SELECT:
 			// 1. music select
 			// 2. save at flash
 			selectSong();
-//			if(isSave == true)
-//			{
-//				remove_tone();
-//				saveCurrentSong();
-//				LCD_Clear();
-//			}
+			if(isSave == true || ble.receivedCommand_flag)
+			{
+				remove_tone();
+				saveCurrentTime(SONG_SET);
+				ble.receivedCommand_flag = false;
+								BLE_Command();
+				LCD_Clear();
+			}
 			printf("music mode\r\n");
 			break;
 		default:
@@ -309,11 +325,38 @@ static void MX_NVIC_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+// DATASIZE_FLASH
+void clockEntry()
+{
+	if(readFlash(flash.USER_START_ADDR) == ACTIVE_FLASH)
+	{
+		for(uint32_t index = 0;
+				index < DATASIZE_FLASH*4; index += 4)
+		{
+			saveData[index/4] = readFlash(flash.USER_START_ADDR + index);
+		}
+		printf(">>data loaded\r\n");
+	}
+	else
+	{
+		printf("no data exist\r\n just start\r\n");
+	}
+	init_set_time();
+}
+
+void init_set_time()
+{
+	sTime.TimeFormat = saveData[AMPM_CUR];
+	sTime.Hours = saveData[HOUR_CUR];
+	sTime.Minutes = saveData[MIN_CUR];
+	sTime.Seconds = saveData[SEC_CUR];
+	HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
+}
+
 void set_time(uint8_t hh, uint8_t mm, uint8_t ss)
 {
 	//RTC_TimeTypeDef sTime;
-
-	sTime.Hours = hh + 1;
+	sTime.Hours = hh;
 	sTime.Minutes = mm;
 	sTime.Seconds = ss;
 	HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
@@ -341,7 +384,6 @@ void set_alarm(uint8_t hh, uint8_t mm, uint8_t ss)
 void set_date(uint8_t ww, uint8_t mm, uint8_t dd, uint8_t yy)
 {
 	//RTC_DateTypeDef sDate;
-
 	sDate.WeekDay = ww;
 	sDate.Month = mm;
 	sDate.Date = dd;
@@ -353,20 +395,19 @@ void get_time(void)
 {
 	HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
 	HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
-	curr_ap = sTime.TimeFormat;
-	curr_h = sTime.Hours;
-	curr_m = sTime.Minutes;
-	curr_s = sTime.Seconds;
+
+	temp_ap = sTime.TimeFormat;
+	temp_h = sTime.Hours;
+	temp_m = sTime.Minutes;
+	temp_s = sTime.Seconds;
 	memset(showTime, 0, sizeof(showTime)/sizeof(showTime));
 	memset(showDate, 0, sizeof(showDate)/sizeof(showDate));
 	sprintf((char*)showTime, "%s %02d:%02d:%02d",ampm[sTime.TimeFormat], sTime.Hours, sTime.Minutes, sTime.Seconds);
 	sprintf((char*)showDate, "  %04d/%02d/%02d",2000+sDate.Year, sDate.Month, sDate.Date);
 	LCD_PrintAll(showDate, showTime);
-	//printf("%s %s\r\n", showTime, showDate);
 }
 
-
-void timeSetter()
+void timeSetter(flashStatus_e status)
 {
 	static bool toggleChar = false;
 	static uint8_t choice = 0;
@@ -387,100 +428,172 @@ void timeSetter()
 			choice = 3;
 		}
 	}
-	//"%s %02d:%02d:%02d"
 	switch (choice)
 	{
 	case AMPM:
 		if(toggleChar)
 		{
-			sprintf(controlTime, "__ %02d:%02d:%02d",curr_h,curr_m,curr_s);
+			sprintf(controlTime, "__ %02d:%02d:%02d",temp_h,temp_m,temp_s);
 		}
 		else
 		{
 			if(IsUP())
 			{
-				curr_ap++;
+				temp_ap++;
 			}
 			else if(IsDown())
 			{
-				curr_ap--;
+				temp_ap--;
 			}
-			curr_ap = curr_ap % 2;
-			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+
+			temp_ap = temp_ap % 2;				// essential
+			if(temp_ap == 1)
+			{
+				temp_h = temp_h % 12 + 12;
+			}
+			else
+			{
+				temp_h = temp_h % 12;
+			}
+			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[temp_ap],temp_h,temp_m,temp_s);
 		}
 		break;
 	case HOUR:
 		if(toggleChar)
 		{
-			sprintf(controlTime, "%s __:%02d:%02d",ampm[curr_ap%2],curr_m,curr_s);
+			sprintf(controlTime, "%s __:%02d:%02d",ampm[temp_ap%2],temp_m,temp_s);
 		}
 		else
 		{
 			if(IsUP())
 			{
-				curr_h++;
+				temp_h++;
 			}
 			else if(IsDown())
 			{
-				curr_h--;
+				temp_h--;
 			}
-			curr_h %= 24;
-			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+			//temp_h %= 24;
+			if(temp_h == 0xFF)
+			{
+				temp_h = 23;
+			}
+			else
+			{
+				temp_h = temp_h % 24;	// 0 ~ 23
+				if(temp_h >= 12)
+				{
+					temp_ap = 1;
+				}
+				else
+				{
+					temp_ap = 0;
+				}
+			}
+			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[temp_ap],temp_h,temp_m,temp_s);
 		}
 		break;
 	case MIN:
 		if(toggleChar)
 		{
-			sprintf(controlTime, "%s %02d:__:%02d",ampm[curr_ap],curr_h,curr_s);
+			sprintf(controlTime, "%s %02d:__:%02d",ampm[temp_ap],temp_h,temp_s);
 		}
 		else
 		{
 			if(IsUP())
 			{
-				curr_m++;
+				temp_m++;
 			}
 			else if(IsDown())
 			{
-				curr_m--;
+				temp_m--;
 			}
-			curr_m %= 60;
-			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+			//temp_m %= 60;
+			if(temp_m == 0xFF)
+			{
+				temp_m = 59;
+			}
+			else
+			{
+				temp_m %= 60;
+			}
+			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[temp_ap],temp_h,temp_m,temp_s);
 		}
 		break;
 	case SEC:
 		if(toggleChar)
 		{
-			sprintf(controlTime, "%s %02d:%02d:__",ampm[curr_ap],curr_h,curr_m);
+			sprintf(controlTime, "%s %02d:%02d:__",ampm[temp_ap],temp_h,temp_m);
 		}
 		else
 		{
 			if(IsUP())
 			{
-				curr_s++;
+				temp_s++;
 			}
 			else if(IsDown())
 			{
-				curr_s--;
+				temp_s--;
 			}
-			curr_s %= 60;
-			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[curr_ap],curr_h,curr_m,curr_s);
+			//temp_s %= 60;
+			if(temp_s == 0xFF)
+			{
+				temp_s = 59;
+			}
+			else
+			{
+				temp_s %= 60;
+			}
+			sprintf(controlTime, "%s %02d:%02d:%02d",ampm[temp_ap],temp_h,temp_m,temp_s);
 		}
 		break;
 	default:
 		break;
 	}
-	LCD_PrintAll("Set Time      ", controlTime);
+	if(status == TIME_SET)
+	{
+		curr_ap = temp_ap;
+		curr_h = temp_h;
+		curr_m = temp_m;
+		curr_s = temp_s;
+	}
+	else if(status == ALARM_SET)
+	{
+		alarm_ap = temp_ap;
+		alarm_h = temp_h;
+		alarm_m = temp_m;
+		alarm_s = temp_s;
+	}
 	toggleChar = !toggleChar;
 }
-void saveCurrentTime()
+void saveCurrentTime(flashStatus_e status)
 {
-	saveData[0] = ACTIVE_FLASH;
-	saveData[1] = ampm[curr_ap];
-	saveData[2] = curr_h;
-	saveData[3] = curr_m;
-	saveData[4] = curr_s;
+	if(status ==  TIME_SET)
+	{
+		saveData[FLASH_ON] = ACTIVE_FLASH;
+	}
+	else if(status == ALARM_SET)
+	{
+		saveData[ALARM_ON] = ACTIVE_ALARM;
+	}
+	else if(status == SONG_SET)
+	{
+		saveData[SONG_ON] = ACTIVE_SONG;
+	}
+	saveData[AMPM_CUR] = curr_ap;
+	saveData[HOUR_CUR] = curr_h;
+	saveData[MIN_CUR] = curr_m;
+	saveData[SEC_CUR] = curr_s;
+
+	saveData[AMPM_AL] = alarm_ap;
+	saveData[HOUR_AL] = alarm_h;
+	saveData[MIN_AL] = alarm_m;
+	saveData[SEC_AL] = alarm_s;
+
+	saveData[SONG_INDEX] = songIndex;
+
 	eraseFlash(&flash);
-	for(int index = 0; index < FLASH_TIME_DATA + 20; index += 4)
+	for(int index = 0; index < DATASIZE_FLASH * 4; index += 4)
 	{
 		overwriteFlash(&flash, saveData[index/4]);
 		flash.USER_TARGET_ADDR += 4;
@@ -489,28 +602,22 @@ void saveCurrentTime()
 	isSave = false;
 	clock_state = NORMAL_STATE;
 }
-void saveCurrentSong()
-{
-	isSave = false;
-	clock_state = NORMAL_STATE;
-}
+
 void selectSong(void)
 {
-	static uint8_t songIndex = 0, now_playing = 0;
+	static int now_playing = 0;
 	char currentSong[LCD_SIZE] = {0};
 
 	if(IsUP())
 	{
 		songIndex++;
 		now_playing = 0;
-
 		LCD_Clear();
 	}
 	else if(IsDown())
 	{
 		songIndex--;
 		now_playing = 0;
-
 		LCD_Clear();
 	}
 	printf("y: %ld\r\n",Joycon[1]);
@@ -525,7 +632,6 @@ void selectSong(void)
 	}
 	LCD_PrintAll("Wake Up Call", currentSong);
 	songList[songIndex](&now_playing);
-
 }
 
 void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
@@ -533,7 +639,6 @@ void HAL_RTC_AlarmAEventCallback(RTC_HandleTypeDef *hrtc)
 	HAL_GPIO_TogglePin(GPIOB, LD1_Pin|LD2_Pin|LD3_Pin);
 	printf("RINGRINGRINGRING!!!!!!!!!!!!!!!!!!!!\r\n");
 }
-
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
@@ -606,6 +711,50 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 		}
 	}
 }
+void BLE_Command()
+{
+	switch (ble.command[0]) {
+		case 'A':
+			clock_state = ALARM_TIME_SETTING;
+			break;
+		case ' T':
+			clock_state = TIME_SETTING;
+			break;
+		case 'M':
+			clock_state = MUSIC_SELECT;
+			break;
+		case 'N':
+			clock_state = NORMAL_STATE;
+			break;
+		default:
+			printf("BLE bool: %d", ble.receivedCommand_flag);
+			break;
+	}
+//	if(strcmp("ALARM", ble.command) == 0)
+//	{
+//		clock_state = ALARM_TIME_SETTING;
+//		printf("ON\r\n");
+//	}
+//	else if(strcmp("NORMAL", ble.command) == 0)
+//	{
+//		clock_state = NORMAL_STATE;
+//		printf("ON\r\n");
+//	}
+//	else if(strcmp("MUSIC", ble.command) == 0)
+//	{
+//		clock_state = MUSIC_SELECT;
+//		printf("ON\r\n");
+//	}
+//	else if(strcmp("TIME", ble.command) == 0)
+//	{
+//		clock_state = TIME_SETTING;
+//		printf("ON\r\n");
+//	}
+//	else
+//	{
+//		printf("OFF\r\n");
+//	}
+}
 
 bool IsRight(void)
 {
@@ -642,7 +791,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		}
 		else
 		{
-
 			ble.bleBuffer[ble.cur_BLE_Index] = rx3Data;
 			printf("collecting: %c\r\n", (char)rx3Data);
 			ble.cur_BLE_Index++;
@@ -655,6 +803,21 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	{
 		HAL_UART_Transmit(&huart3, (uint8_t*)&rx4Data, sizeof(rx4Data), 100);
 		HAL_UART_Receive_IT(&huart4, (uint8_t*)&rx4Data, sizeof(rx4Data));
+		if(rx4Data == '\n')
+		{
+			ble.comBuffer[ble.cur_COM_Index] = '\0';
+			memcpy(ble.command, ble.comBuffer, sizeof(ble.comBuffer)/sizeof(ble.comBuffer[0]));
+			memset(ble.comBuffer, 0, sizeof(ble.comBuffer)/sizeof(ble.comBuffer[0]));
+			//strcat(ble.command, "\0", 1);
+			ble.receivedCommand_flag = true;
+			ble.cur_COM_Index = 0;
+			printf("<끝>\r\n");
+		}
+		else
+		{
+			ble.comBuffer[ble.cur_COM_Index] = rx4Data;
+			ble.cur_COM_Index++;
+		}
 #if 0
 		if(ble.comBuffer[ble.cur_COM_Index] == '\0' | ble.cur_COM_Index > 64)
 		{

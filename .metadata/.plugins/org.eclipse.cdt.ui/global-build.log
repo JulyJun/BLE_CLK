@@ -29,3 +29,1484 @@ Finished building: STM_CLK.bin
  
 Finished building: STM_CLK.list
  
+09:02:38 **** Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'saveCurrentTime':
+../Core/Src/main.c:479:21: warning: assignment to 'uint32_t' {aka 'long unsigned int'} from 'char *' makes integer from pointer without a cast [-Wint-conversion]
+  479 |         saveData[1] = ampm[curr_ap];
+      |                     ^
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:528:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  528 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:528:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46388	    128	   4800	  51316	   c874	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.bin
+Finished building: STM_CLK.hex
+ 
+ 
+Finished building: STM_CLK.list
+ 
+10:10:40 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/adc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/adc.d" -MT"Core/Src/adc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/adc.o"
+arm-none-eabi-gcc "../Core/Src/dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/dma.d" -MT"Core/Src/dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/dma.o"
+arm-none-eabi-gcc "../Core/Src/eth.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/eth.d" -MT"Core/Src/eth.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/eth.o"
+arm-none-eabi-gcc "../Core/Src/flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/flash.d" -MT"Core/Src/flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/flash.o"
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/gpio.o"
+arm-none-eabi-gcc "../Core/Src/i2c.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/i2c.d" -MT"Core/Src/i2c.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/i2c.o"
+arm-none-eabi-gcc "../Core/Src/lcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/lcd.d" -MT"Core/Src/lcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/lcd.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/flash.c: In function 'readFlash':
+../Core/Src/flash.c:156:21: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  156 |   printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
+      |                  ~~~^               ~~~~~~~~~
+      |                     |               |
+      |                     unsigned int    uint32_t {aka long unsigned int}
+      |                  %08lx
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:200:33: error: too few arguments to function 'saveCurrentTime'
+  200 |                                 saveCurrentTime();
+      |                                 ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:202:6: note: declared here
+  202 | void saveCurrentTime(flashStatus_e status);
+      |      ^~~~~~~~~~~~~~~
+../Core/Src/main.c:214:33: error: too few arguments to function 'saveCurrentTime'
+  214 |                                 saveCurrentTime();
+      |                                 ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:202:6: note: declared here
+  202 | void saveCurrentTime(flashStatus_e status);
+      |      ^~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'timeSetter':
+../Core/Src/main.c:485:12: error: 'status' undeclared (first use in this function); did you mean 'status_f'?
+  485 |         if(status == TIME_SET)
+      |            ^~~~~~
+      |            status_f
+../Core/Src/main.c:485:12: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:570:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  570 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:570:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+make: *** [Core/Src/subdir.mk:70: Core/Src/main.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+10:11:51 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/adc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/adc.d" -MT"Core/Src/adc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/adc.o"
+arm-none-eabi-gcc "../Core/Src/dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/dma.d" -MT"Core/Src/dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/dma.o"
+arm-none-eabi-gcc "../Core/Src/eth.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/eth.d" -MT"Core/Src/eth.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/eth.o"
+arm-none-eabi-gcc "../Core/Src/flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/flash.d" -MT"Core/Src/flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/flash.o"
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/gpio.o"
+arm-none-eabi-gcc "../Core/Src/i2c.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/i2c.d" -MT"Core/Src/i2c.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/i2c.o"
+arm-none-eabi-gcc "../Core/Src/lcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/lcd.d" -MT"Core/Src/lcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/lcd.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/flash.c: In function 'readFlash':
+../Core/Src/flash.c:156:21: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  156 |   printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
+      |                  ~~~^               ~~~~~~~~~
+      |                     |               |
+      |                     unsigned int    uint32_t {aka long unsigned int}
+      |                  %08lx
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:210:25: error: too few arguments to function 'timeSetter'
+  210 |                         timeSetter();
+      |                         ^~~~~~~~~~
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:201:6: note: declared here
+  201 | void timeSetter(flashStatus_e status);
+      |      ^~~~~~~~~~
+../Core/Src/main.c:214:33: error: too few arguments to function 'saveCurrentTime'
+  214 |                                 saveCurrentTime();
+      |                                 ^~~~~~~~~~~~~~~
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:202:6: note: declared here
+  202 | void saveCurrentTime(flashStatus_e status);
+      |      ^~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:570:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  570 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:570:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+make: *** [Core/Src/subdir.mk:70: Core/Src/main.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+10:12:24 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/rtc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/rtc.d" -MT"Core/Src/rtc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/rtc.o"
+arm-none-eabi-gcc "../Core/Src/songs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/songs.d" -MT"Core/Src/songs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/songs.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
+arm-none-eabi-gcc "../Core/Src/tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/tim.d" -MT"Core/Src/tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/tim.o"
+arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usart.o"
+arm-none-eabi-gcc "../Core/Src/usb_otg.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usb_otg.d" -MT"Core/Src/usb_otg.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usb_otg.o"
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:570:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  570 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:570:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46688	    128	   4840	  51656	   c9c8	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+10:20:58 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:566:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  566 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:566:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46736	    128	   4840	  51704	   c9f8	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+13:55:28 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/adc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/adc.d" -MT"Core/Src/adc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/adc.o"
+arm-none-eabi-gcc "../Core/Src/dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/dma.d" -MT"Core/Src/dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/dma.o"
+arm-none-eabi-gcc "../Core/Src/eth.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/eth.d" -MT"Core/Src/eth.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/eth.o"
+arm-none-eabi-gcc "../Core/Src/flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/flash.d" -MT"Core/Src/flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/flash.o"
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/gpio.o"
+arm-none-eabi-gcc "../Core/Src/i2c.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/i2c.d" -MT"Core/Src/i2c.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/i2c.o"
+arm-none-eabi-gcc "../Core/Src/lcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/lcd.d" -MT"Core/Src/lcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/lcd.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/flash.c: In function 'readFlash':
+../Core/Src/flash.c:156:21: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  156 |   printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
+      |                  ~~~^               ~~~~~~~~~
+      |                     |               |
+      |                     unsigned int    uint32_t {aka long unsigned int}
+      |                  %08lx
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:584:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  584 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:584:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc "../Core/Src/rtc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/rtc.d" -MT"Core/Src/rtc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/rtc.o"
+arm-none-eabi-gcc "../Core/Src/songs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/songs.d" -MT"Core/Src/songs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/songs.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
+arm-none-eabi-gcc "../Core/Src/tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/tim.d" -MT"Core/Src/tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/tim.o"
+arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usart.o"
+arm-none-eabi-gcc "../Core/Src/usb_otg.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usb_otg.d" -MT"Core/Src/usb_otg.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usb_otg.o"
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46864	    128	   4904	  51896	   cab8	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+13:57:21 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:585:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  585 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:585:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46772	    128	   4904	  51804	   ca5c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+13:58:14 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:334:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  334 |                         printf("current index: %x", index);
+      |                                                ~^   ~~~~~
+      |                                                 |   |
+      |                                                 |   uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:586:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  586 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:586:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46808	    128	   4904	  51840	   ca80	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+13:59:15 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:334:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  334 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:336:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  336 |                         printf("current save: %d\r\n", saveData[index/4]);
+      |                                               ~^       ~~~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:587:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  587 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:587:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46852	    128	   4904	  51884	   caac	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+13:59:43 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  46852	    128	   4904	  51884	   caac	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+14:01:17 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:334:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  334 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:336:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  336 |                         printf("current save: %d\r\n", saveData[index/4]);
+      |                                               ~^       ~~~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:587:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  587 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:587:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46856	    128	   4904	  51888	   cab0	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+14:01:44 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  46856	    128	   4904	  51888	   cab0	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+14:04:25 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:335:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  335 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:337:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  337 |                         printf("current save: %d\r\n", saveData[index/4]);
+      |                                               ~^       ~~~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:588:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  588 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:588:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46860	    128	   4904	  51892	   cab4	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+14:05:24 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:335:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  335 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:337:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  337 |                         printf("current save: %d\r\n", saveData[count]);
+      |                                               ~^       ~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:588:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  588 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:588:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+   text	   data	    bss	    dec	    hex	filename
+  46856	    128	   4904	  51888	   cab0	STM_CLK.elf
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+14:06:02 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  46856	    128	   4904	  51888	   cab0	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+14:07:48 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  46856	    128	   4904	  51888	   cab0	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+14:08:36 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  46856	    128	   4904	  51888	   cab0	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+14:09:28 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  46856	    128	   4904	  51888	   cab0	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+14:14:42 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:335:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  335 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:337:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  337 |                         printf("current save: %d\r\n", saveData[index]);
+      |                                               ~^       ~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:588:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  588 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:588:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46848	    128	   4904	  51880	   caa8	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+14:15:14 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:335:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  335 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:337:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  337 |                         printf("current save: %d\r\n", saveData[index]);
+      |                                               ~^       ~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:588:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  588 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:588:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+   text	   data	    bss	    dec	    hex	filename
+  46848	    128	   4904	  51880	   caa8	STM_CLK.elf
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+14:15:32 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  46848	    128	   4904	  51880	   caa8	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+14:17:55 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:335:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  335 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:337:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  337 |                         printf("current save: %d\r\n", saveData[index]);
+      |                                               ~^       ~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:588:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  588 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:588:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+   text	   data	    bss	    dec	    hex	filename
+  46848	    128	   4904	  51880	   caa8	STM_CLK.elf
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+14:20:41 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:335:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  335 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:337:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  337 |                         printf("current save: %d\r\n", saveData[index]);
+      |                                               ~^       ~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:589:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  589 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:589:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46872	    128	   4904	  51904	   cac0	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+14:48:57 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/flash.d" -MT"Core/Src/flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/flash.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/flash.c: In function 'readFlash':
+../Core/Src/flash.c:157:21: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  157 |   printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
+      |                  ~~~^               ~~~~~~~~~
+      |                     |               |
+      |                     unsigned int    uint32_t {aka long unsigned int}
+      |                  %08lx
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:335:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  335 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:337:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  337 |                         printf("current save: %d\r\n", saveData[index]);
+      |                                               ~^       ~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c:345:9: warning: implicit declaration of function 'init_set_time'; did you mean 'set_time'? [-Wimplicit-function-declaration]
+  345 |         init_set_time();
+      |         ^~~~~~~~~~~~~
+      |         set_time
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:348:6: warning: conflicting types for 'init_set_time'; have 'void()'
+  348 | void init_set_time()
+      |      ^~~~~~~~~~~~~
+../Core/Src/main.c:345:9: note: previous implicit declaration of 'init_set_time' with type 'void()'
+  345 |         init_set_time();
+      |         ^~~~~~~~~~~~~
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:596:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  596 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:596:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46916	    128	   4904	  51948	   caec	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+15:01:28 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/adc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/adc.d" -MT"Core/Src/adc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/adc.o"
+arm-none-eabi-gcc "../Core/Src/dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/dma.d" -MT"Core/Src/dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/dma.o"
+arm-none-eabi-gcc "../Core/Src/eth.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/eth.d" -MT"Core/Src/eth.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/eth.o"
+arm-none-eabi-gcc "../Core/Src/flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/flash.d" -MT"Core/Src/flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/flash.o"
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/gpio.o"
+arm-none-eabi-gcc "../Core/Src/i2c.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/i2c.d" -MT"Core/Src/i2c.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/i2c.o"
+arm-none-eabi-gcc "../Core/Src/lcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/lcd.d" -MT"Core/Src/lcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/lcd.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/flash.c: In function 'readFlash':
+../Core/Src/flash.c:157:21: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  157 |   printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
+      |                  ~~~^               ~~~~~~~~~
+      |                     |               |
+      |                     unsigned int    uint32_t {aka long unsigned int}
+      |                  %08lx
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:334:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  334 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:336:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  336 |                         printf("current save: %d\r\n", saveData[index]);
+      |                                               ~^       ~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:595:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  595 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:595:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc "../Core/Src/rtc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/rtc.d" -MT"Core/Src/rtc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/rtc.o"
+arm-none-eabi-gcc "../Core/Src/songs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/songs.d" -MT"Core/Src/songs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/songs.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
+arm-none-eabi-gcc "../Core/Src/tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/tim.d" -MT"Core/Src/tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/tim.o"
+arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usart.o"
+arm-none-eabi-gcc "../Core/Src/usb_otg.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usb_otg.d" -MT"Core/Src/usb_otg.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usb_otg.o"
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46912	    140	   4892	  51944	   cae8	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+15:04:57 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:334:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  334 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:336:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  336 |                         printf("current save: %d\r\n", saveData[index]);
+      |                                               ~^       ~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:599:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  599 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:599:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46912	    140	   4892	  51944	   cae8	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+15:14:00 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:334:49: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  334 |                         printf("current index: %x\r\n", index);
+      |                                                ~^       ~~~~~
+      |                                                 |       |
+      |                                                 |       uint32_t {aka long unsigned int}
+      |                                                 unsigned int
+      |                                                %lx
+../Core/Src/main.c:336:48: warning: format '%d' expects argument of type 'int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  336 |                         printf("current save: %d\r\n", saveData[index]);
+      |                                               ~^       ~~~~~~~~~~~~~~~
+      |                                                |               |
+      |                                                int             uint32_t {aka long unsigned int}
+      |                                               %ld
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:599:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  599 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:599:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46924	    140	   4892	  51956	   caf4	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+15:22:55 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:593:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  593 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:593:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46916	    140	   4892	  51948	   caec	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+15:23:29 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:593:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  593 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:593:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+   text	   data	    bss	    dec	    hex	filename
+  46916	    140	   4892	  51948	   caec	STM_CLK.elf
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+15:26:03 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:593:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  593 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:593:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+   text	   data	    bss	    dec	    hex	filename
+  46924	    140	   4892	  51956	   caf4	STM_CLK.elf
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+15:38:07 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:610:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  610 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:610:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  46960	    140	   4892	  51992	   cb18	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+15:53:17 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:626:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:626:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  47012	    140	   4892	  52044	   cb4c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+15:53:39 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:626:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  626 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:626:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  47012	    140	   4892	  52044	   cb4c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+15:54:16 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  47012	    140	   4892	  52044	   cb4c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+16:20:31 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/adc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/adc.d" -MT"Core/Src/adc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/adc.o"
+arm-none-eabi-gcc "../Core/Src/dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/dma.d" -MT"Core/Src/dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/dma.o"
+arm-none-eabi-gcc "../Core/Src/eth.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/eth.d" -MT"Core/Src/eth.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/eth.o"
+arm-none-eabi-gcc "../Core/Src/flash.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/flash.d" -MT"Core/Src/flash.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/flash.o"
+arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/gpio.o"
+arm-none-eabi-gcc "../Core/Src/i2c.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/i2c.d" -MT"Core/Src/i2c.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/i2c.o"
+arm-none-eabi-gcc "../Core/Src/lcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/lcd.d" -MT"Core/Src/lcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/lcd.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Inc/adc.h:29,
+                 from ../Core/Src/adc.c:21:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Inc/dma.h:29,
+                 from ../Core/Src/dma.c:22:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Inc/flash.h:11,
+                 from ../Core/Src/flash.c:9:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+../Core/Src/flash.c: In function 'readFlash':
+../Core/Src/flash.c:157:21: warning: format '%x' expects argument of type 'unsigned int', but argument 2 has type 'uint32_t' {aka 'long unsigned int'} [-Wformat=]
+  157 |   printf("addr[0x%08x] = %08x\r\n", StartADDR, value);
+      |                  ~~~^               ~~~~~~~~~
+      |                     |               |
+      |                     unsigned int    uint32_t {aka long unsigned int}
+      |                  %08lx
+In file included from ../Core/Inc/gpio.h:29,
+                 from ../Core/Src/gpio.c:22:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Inc/eth.h:29,
+                 from ../Core/Src/eth.c:21:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Inc/i2c.h:29,
+                 from ../Core/Src/i2c.c:21:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Inc/lcd.h:12,
+                 from ../Core/Src/lcd.c:1:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:57: warning: implicit declaration of function 'BLE_Command' [-Wimplicit-function-declaration]
+  188 |                                                         BLE_Command();
+      |                                                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:634:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  634 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:634:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:714:6: warning: conflicting types for 'BLE_Command'; have 'void()'
+  714 | void BLE_Command()
+      |      ^~~~~~~~~~~
+../Core/Src/main.c:188:57: note: previous implicit declaration of 'BLE_Command' with type 'void()'
+  188 |                                                         BLE_Command();
+      |                                                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'BLE_Command':
+../Core/Src/main.c:718:17: error: 'status' undeclared (first use in this function); did you mean 'status_f'?
+  718 |                 status = ALARM_TIME_SETTING;
+      |                 ^~~~~~
+      |                 status_f
+../Core/Src/main.c:718:17: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:70: Core/Src/main.o] Error 1
+make: *** Waiting for unfinished jobs....
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+16:21:38 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/rtc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/rtc.d" -MT"Core/Src/rtc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/rtc.o"
+arm-none-eabi-gcc "../Core/Src/songs.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/songs.d" -MT"Core/Src/songs.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/songs.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_it.d" -MT"Core/Src/stm32f4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_it.o"
+arm-none-eabi-gcc "../Core/Src/tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/tim.d" -MT"Core/Src/tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/tim.o"
+arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usart.o"
+arm-none-eabi-gcc "../Core/Src/usb_otg.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usb_otg.d" -MT"Core/Src/usb_otg.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usb_otg.o"
+In file included from ../Core/Inc/rtc.h:29,
+                 from ../Core/Src/rtc.c:21:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Inc/tim.h:29,
+                 from ../Core/Inc/songs.h:13,
+                 from ../Core/Src/songs.c:7:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Src/stm32f4xx_hal_msp.c:22:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Inc/tim.h:29,
+                 from ../Core/Src/tim.c:21:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Src/stm32f4xx_it.c:21:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+In file included from ../Core/Inc/usb_otg.h:29,
+                 from ../Core/Src/usb_otg.c:21:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:57: warning: implicit declaration of function 'BLE_Command' [-Wimplicit-function-declaration]
+  188 |                                                         BLE_Command();
+      |                                                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:634:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  634 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:634:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:714:6: warning: conflicting types for 'BLE_Command'; have 'void()'
+  714 | void BLE_Command()
+      |      ^~~~~~~~~~~
+../Core/Src/main.c:188:57: note: previous implicit declaration of 'BLE_Command' with type 'void()'
+  188 |                                                         BLE_Command();
+      |                                                         ^~~~~~~~~~~
+In file included from ../Core/Inc/usart.h:29,
+                 from ../Core/Src/usart.c:21:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  47380	    140	   4892	  52412	   ccbc	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+16:22:53 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:57: warning: implicit declaration of function 'BLE_Command' [-Wimplicit-function-declaration]
+  188 |                                                         BLE_Command();
+      |                                                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:634:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  634 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:634:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:714:6: warning: conflicting types for 'BLE_Command'; have 'void()'
+  714 | void BLE_Command()
+      |      ^~~~~~~~~~~
+../Core/Src/main.c:188:57: note: previous implicit declaration of 'BLE_Command' with type 'void()'
+  188 |                                                         BLE_Command();
+      |                                                         ^~~~~~~~~~~
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  47420	    140	   4892	  52452	   cce4	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+Finished building: STM_CLK.bin
+ 
+ 
+Finished building: STM_CLK.list
+ 
+16:24:53 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:57: warning: implicit declaration of function 'BLE_Command' [-Wimplicit-function-declaration]
+  188 |                                                         BLE_Command();
+      |                                                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:634:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  634 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:634:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:714:6: warning: conflicting types for 'BLE_Command'; have 'void()'
+  714 | void BLE_Command()
+      |      ^~~~~~~~~~~
+../Core/Src/main.c:188:57: note: previous implicit declaration of 'BLE_Command' with type 'void()'
+  188 |                                                         BLE_Command();
+      |                                                         ^~~~~~~~~~~
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  47440	    140	   4892	  52472	   ccf8	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+16:33:51 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:57: warning: implicit declaration of function 'BLE_Command' [-Wimplicit-function-declaration]
+  188 |                                                         BLE_Command();
+      |                                                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:634:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  634 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:634:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:714:6: warning: conflicting types for 'BLE_Command'; have 'void()'
+  714 | void BLE_Command()
+      |      ^~~~~~~~~~~
+../Core/Src/main.c:188:57: note: previous implicit declaration of 'BLE_Command' with type 'void()'
+  188 |                                                         BLE_Command();
+      |                                                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'BLE_Command':
+../Core/Src/main.c:720:22: warning: multi-character character constant [-Wmultichar]
+  720 |                 case ' T':
+      |                      ^~~~
+../Core/Src/main.c:720:17: warning: case label value exceeds maximum value for type [-Wswitch-outside-range]
+  720 |                 case ' T':
+      |                 ^~~~
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+16:37:59 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:25: warning: implicit declaration of function 'BLE_Command' [-Wimplicit-function-declaration]
+  188 |                         BLE_Command();
+      |                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'selectSong':
+../Core/Src/main.c:634:29: warning: passing argument 1 of 'songList[(int)songIndex]' from incompatible pointer type [-Wincompatible-pointer-types]
+  634 |         songList[songIndex](&now_playing);
+      |                             ^~~~~~~~~~~~
+      |                             |
+      |                             uint8_t * {aka unsigned char *}
+../Core/Src/main.c:634:29: note: expected 'int *' but argument is of type 'uint8_t *' {aka 'unsigned char *'}
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:714:6: warning: conflicting types for 'BLE_Command'; have 'void()'
+  714 | void BLE_Command()
+      |      ^~~~~~~~~~~
+../Core/Src/main.c:188:25: note: previous implicit declaration of 'BLE_Command' with type 'void()'
+  188 |                         BLE_Command();
+      |                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'BLE_Command':
+../Core/Src/main.c:720:22: warning: multi-character character constant [-Wmultichar]
+  720 |                 case ' T':
+      |                      ^~~~
+../Core/Src/main.c:720:17: warning: case label value exceeds maximum value for type [-Wswitch-outside-range]
+  720 |                 case ' T':
+      |                 ^~~~
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+   text	   data	    bss	    dec	    hex	filename
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 
+16:40:42 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+16:42:55 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+16:44:19 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+16:48:18 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+16:49:02 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+16:51:27 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+16:53:46 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-size   STM_CLK.elf 
+   text	   data	    bss	    dec	    hex	filename
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
+Finished building: default.size.stdout
+ 
+16:56:55 **** Incremental Build of configuration Debug for project STM_CLK ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+In file included from ../Core/Src/main.c:20:
+../Core/Inc/main.h:187:1: warning: no semicolon at end of struct or union
+  187 | }bleBuffer_t;
+      | ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:188:25: warning: implicit declaration of function 'BLE_Command' [-Wimplicit-function-declaration]
+  188 |                         BLE_Command();
+      |                         ^~~~~~~~~~~
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:714:6: warning: conflicting types for 'BLE_Command'; have 'void()'
+  714 | void BLE_Command()
+      |      ^~~~~~~~~~~
+../Core/Src/main.c:188:25: note: previous implicit declaration of 'BLE_Command' with type 'void()'
+  188 |                         BLE_Command();
+      |                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'BLE_Command':
+../Core/Src/main.c:720:22: warning: multi-character character constant [-Wmultichar]
+  720 |                 case ' T':
+      |                      ^~~~
+../Core/Src/main.c:720:17: warning: case label value exceeds maximum value for type [-Wswitch-outside-range]
+  720 |                 case ' T':
+      |                 ^~~~
+arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: STM_CLK.elf
+ 
+arm-none-eabi-size   STM_CLK.elf 
+arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
+arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
+   text	   data	    bss	    dec	    hex	filename
+  47316	    140	   4892	  52348	   cc7c	STM_CLK.elf
+arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
+Finished building: default.size.stdout
+ 
+Finished building: STM_CLK.hex
+ 
+Finished building: STM_CLK.bin
+ 
+Finished building: STM_CLK.list
+ 

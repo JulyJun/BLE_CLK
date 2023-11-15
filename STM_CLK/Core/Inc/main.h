@@ -118,6 +118,40 @@ void Error_Handler(void);
 #define LD2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+
+/*flash defines*/
+
+// current flash status
+#define INACTIVE_FLASH 0
+#define ACTIVE_FLASH 1
+#define INACTIVE_ALARM 0
+#define ACTIVE_ALARM 1
+#define INACTIVE_SONG 0
+#define ACTIVE_SONG 1
+
+#define DATASIZE_FLASH 12
+
+#define FLASH_ON 0
+#define ALARM_ON 1
+#define SONG_ON 2
+#define AMPM_CUR 3
+#define HOUR_CUR 4
+#define MIN_CUR 5
+#define SEC_CUR 6
+#define AMPM_AL 7
+#define HOUR_AL 8
+#define MIN_AL 9
+#define SEC_AL 10
+#define SONG_INDEX 11
+
+typedef enum{
+	TIME_SET,
+	ALARM_SET,
+	SONG_SET
+} flashStatus_e;
+
+
+/*LCD defines*/
 #define LCD_SIZE 16
 
 typedef enum
@@ -144,10 +178,12 @@ typedef enum
 
 typedef struct
 {
-  char bleBuffer[64];							// Send to BLE
+  char bleBuffer[64];								// Send to BLE
   char comBuffer[64];							// Send to COM
+  char command[64];								// private command
   uint8_t cur_BLE_Index;						// current ble buffer index
-  uint8_t cur_COM_Index;					// current com buffer index
+  uint8_t cur_COM_Index;						// current com buffer index
+  bool receivedCommand_flag		// command receive flag
 }bleBuffer_t;
 
 typedef enum
@@ -158,14 +194,15 @@ typedef enum
 	SEC = 3,
 } timeFormat_t;
 
-
+void clockEntry(void);
+void init_set_time();
 void set_time(uint8_t hh, uint8_t mm, uint8_t ss);
 void set_alarm(uint8_t hh, uint8_t mm, uint8_t ss);
 void set_date(uint8_t ww, uint8_t mm, uint8_t dd, uint8_t yy);
-void get_time();
-void selectSong();
-void timeSetter();
-void saveCurrentTime();
+void get_time(void);
+void selectSong(void);
+void timeSetter(flashStatus_e status);
+void saveCurrentTime(flashStatus_e status);
 void saveCurrentSong();
 bool IsRight(void);
 bool IsLeft(void);

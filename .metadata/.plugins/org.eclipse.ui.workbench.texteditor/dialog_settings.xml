@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="flash.USER_TARGET_ADDR"/>
+		<item key="selection" value="HAL_RTC_SetAlarm_IT"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="HAL_RTC_SetAlarm_IT"/>
+			<item value="currentSong"/>
+			<item value="timeSetter"/>
+			<item value="FLASH_TIME_DATA"/>
+			<item value="curr_ap"/>
+			<item value="curr_h"/>
+			<item value="saveCurrentTime"/>
+			<item value="flashStatus_e"/>
+			<item value="saveData"/>
+			<item value="FLASH_ALARM_DATA"/>
+			<item value="ACTIVE_FLASH"/>
+			<item value="set_time"/>
+			<item value="FirstSector"/>
 			<item value="flash.USER_TARGET_ADDR"/>
 			<item value="flash.USER_TARGET_ADDR "/>
-			<item value="overWriteFlash"/>
-			<item value="overwriteFlash"/>
-			<item value="ADDR_FLASH_SECTOR_x"/>
-			<item value="FLASH_USER_START_ADDR"/>
-			<item value="USER_START_ADDR"/>
-			<item value="target_flashRange_t"/>
-			<item value="printf"/>
-			<item value="get_time"/>
-			<item value="[16]"/>
-			<item value="currentSong"/>
-			<item value="[i]"/>
-			<item value="i"/>
-			<item value="copyTime"/>
 		</list>
 		<list key="replacehistory">
 			<item value="[LCD_SIZE]"/>
