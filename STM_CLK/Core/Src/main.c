@@ -161,7 +161,7 @@ int main(void)
 	HAL_RTC_SetAlarm_IT(&hrtc, &sAlarm, RTC_FORMAT_BIN);
 	init();
 	LCD_Clear();
-//	set_date(RTC_WEEKDAY_MONDAY, 11, 13, 23);
+	set_date(RTC_WEEKDAY_WEDNESDAY, 11, 22, 23);
 //	set_time(13,25,0);
 //	set_alarm(0, 0, 5);
 
@@ -228,7 +228,7 @@ int main(void)
 				remove_tone();
 				saveCurrentTime(SONG_SET);
 				ble.receivedCommand_flag = false;
-								BLE_Command();
+				BLE_Command();
 				LCD_Clear();
 			}
 			printf("music mode\r\n");
@@ -359,6 +359,14 @@ void set_time(uint8_t hh, uint8_t mm, uint8_t ss)
 	sTime.Hours = hh;
 	sTime.Minutes = mm;
 	sTime.Seconds = ss;
+	if(hh >= 12)
+	{
+		sTime.TimeFormat = 1;
+	}
+	else
+	{
+		sTime.TimeFormat = 0;
+	}
 	HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
 }
 void set_alarm(uint8_t hh, uint8_t mm, uint8_t ss)
@@ -400,6 +408,11 @@ void get_time(void)
 	temp_h = sTime.Hours;
 	temp_m = sTime.Minutes;
 	temp_s = sTime.Seconds;
+
+	if(temp_h >= 24)
+	{
+		set_time(0, 0, 0);
+	}
 	memset(showTime, 0, sizeof(showTime)/sizeof(showTime));
 	memset(showDate, 0, sizeof(showDate)/sizeof(showDate));
 	sprintf((char*)showTime, "%s %02d:%02d:%02d",ampm[sTime.TimeFormat], sTime.Hours, sTime.Minutes, sTime.Seconds);
@@ -717,7 +730,7 @@ void BLE_Command()
 		case 'A':
 			clock_state = ALARM_TIME_SETTING;
 			break;
-		case ' T':
+		case 'T':
 			clock_state = TIME_SETTING;
 			break;
 		case 'M':
@@ -725,6 +738,18 @@ void BLE_Command()
 			break;
 		case 'N':
 			clock_state = NORMAL_STATE;
+			break;
+		case 'U':
+			Joycon[1] = UP;
+		break;
+		case 'D':
+			Joycon[1] = DOWN;
+			break;
+		case 'L':
+			Joycon[0] = LEFT;
+			break;
+		case 'R':
+			Joycon[0] = RIGHT;
 			break;
 		default:
 			printf("BLE bool: %d", ble.receivedCommand_flag);
