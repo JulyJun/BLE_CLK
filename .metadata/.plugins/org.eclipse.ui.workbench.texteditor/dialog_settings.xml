@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="showDate"/>
+		<item key="selection" value="sAlarm"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="showDate"/>
-			<item value="timeSetter"/>
-			<item value="now_playing"/>
-			<item value="songList"/>
-			<item value="CLK_State_t"/>
-			<item value="status"/>
-			<item value="ble."/>
-			<item value="ble"/>
-			<item value="MemoryProgramStatus"/>
-			<item value="set_alarm"/>
-			<item value="alarm_ap"/>
-			<item value="saveData"/>
 			<item value="sAlarm"/>
-			<item value="set_time"/>
-			<item value="HAL_RTC_SetAlarm_IT"/>
+			<item value="if(alarmFlag == true)"/>
+			<item value="hrtc"/>
+			<item value="alarmFlag"/>
+			<item value="printf"/>
+			<item value="command"/>
+			<item value="&lt;끝&gt;"/>
+			<item value="ctime"/>
 		</list>
 		<list key="replacehistory">
 			<item value="[LCD_SIZE]"/>

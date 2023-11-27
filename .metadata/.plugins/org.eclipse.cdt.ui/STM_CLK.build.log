@@ -1,4 +1,4 @@
-09:46:29 **** Incremental Build of configuration Debug for project STM_CLK ****
+19:27:55 **** Incremental Build of configuration Debug for project STM_CLK ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F429xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 In file included from ../Core/Src/main.c:20:
@@ -6,15 +6,50 @@ In file included from ../Core/Src/main.c:20:
   187 | }bleBuffer_t;
       | ^
 ../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:188:25: warning: implicit declaration of function 'BLE_Command' [-Wimplicit-function-declaration]
-  188 |                         BLE_Command();
+../Core/Src/main.c:191:25: warning: implicit declaration of function 'BLE_Command' [-Wimplicit-function-declaration]
+  191 |                         BLE_Command();
       |                         ^~~~~~~~~~~
+../Core/Src/main.c: In function 'clockEntry':
+../Core/Src/main.c:346:17: warning: implicit declaration of function 'timeLoad' [-Wimplicit-function-declaration]
+  346 |                 timeLoad();
+      |                 ^~~~~~~~
+../Core/Src/main.c:348:17: warning: implicit declaration of function 'alarmLoad' [-Wimplicit-function-declaration]
+  348 |                 alarmLoad();
+      |                 ^~~~~~~~~
 ../Core/Src/main.c: At top level:
-../Core/Src/main.c:727:6: warning: conflicting types for 'BLE_Command'; have 'void()'
-  727 | void BLE_Command()
+../Core/Src/main.c:357:6: warning: conflicting types for 'timeLoad'; have 'void()'
+  357 | void timeLoad()
+      |      ^~~~~~~~
+../Core/Src/main.c:346:17: note: previous implicit declaration of 'timeLoad' with type 'void()'
+  346 |                 timeLoad();
+      |                 ^~~~~~~~
+../Core/Src/main.c:361:6: warning: conflicting types for 'alarmLoad'; have 'void()'
+  361 | void alarmLoad()
+      |      ^~~~~~~~~
+../Core/Src/main.c:348:17: note: previous implicit declaration of 'alarmLoad' with type 'void()'
+  348 |                 alarmLoad();
+      |                 ^~~~~~~~~
+../Core/Src/main.c: In function 'timeSetter':
+../Core/Src/main.c:446:9: warning: implicit declaration of function 'BLE_ControlCommand' [-Wimplicit-function-declaration]
+  446 |         BLE_ControlCommand();
+      |         ^~~~~~~~~~~~~~~~~~
+../Core/Src/main.c: In function 'alarmOn':
+../Core/Src/main.c:820:37: warning: passing argument 1 of 'songList[(int)songIndex]' discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+  820 |                 songList[songIndex](&now_note);
+      |                                     ^~~~~~~~~
+../Core/Src/main.c:820:37: note: expected 'int *' but argument is of type 'volatile unsigned int *'
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:828:6: warning: conflicting types for 'BLE_ControlCommand'; have 'void()'
+  828 | void BLE_ControlCommand()
+      |      ^~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:446:9: note: previous implicit declaration of 'BLE_ControlCommand' with type 'void()'
+  446 |         BLE_ControlCommand();
+      |         ^~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:856:6: warning: conflicting types for 'BLE_Command'; have 'void()'
+  856 | void BLE_Command()
       |      ^~~~~~~~~~~
-../Core/Src/main.c:188:25: note: previous implicit declaration of 'BLE_Command' with type 'void()'
-  188 |                         BLE_Command();
+../Core/Src/main.c:191:25: note: previous implicit declaration of 'BLE_Command' with type 'void()'
+  191 |                         BLE_Command();
       |                         ^~~~~~~~~~~
 arm-none-eabi-gcc -o "STM_CLK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\ST_CLK\STM_CLK\STM32F429ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM_CLK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: STM_CLK.elf
@@ -24,7 +59,7 @@ arm-none-eabi-objdump -h -S  STM_CLK.elf  > "STM_CLK.list"
 arm-none-eabi-objcopy  -O ihex  STM_CLK.elf  "STM_CLK.hex"
 arm-none-eabi-objcopy  -O binary  STM_CLK.elf  "STM_CLK.bin"
    text	   data	    bss	    dec	    hex	filename
-  47532	    140	   4892	  52564	   cd54	STM_CLK.elf
+  47816	    140	   4788	  52744	   ce08	STM_CLK.elf
 Finished building: default.size.stdout
  
 Finished building: STM_CLK.hex
@@ -34,5 +69,5 @@ Finished building: STM_CLK.bin
 Finished building: STM_CLK.list
  
 
-09:46:30 Build Finished. 0 errors, 3 warnings. (took 1s.537ms)
+19:27:56 Build Finished. 0 errors, 10 warnings. (took 1s.532ms)
 
